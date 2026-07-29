@@ -44,7 +44,7 @@ class GalleryController extends Controller
         }
 
         if ($request->hasFile('img')) {
-            $validated['img'] = $request->file('img')->store('albums', 'public');
+            $validated['img'] = $request->file('img')->store('gallery/albums', 'public');
         }
 
         Album::create($validated);
@@ -75,7 +75,7 @@ class GalleryController extends Controller
             if ($album->img && \Storage::disk('public')->exists($album->img)) {
                 \Storage::disk('public')->delete($album->img);
             }
-            $validated['img'] = $request->file('img')->store('albums', 'public');
+            $validated['img'] = $request->file('img')->store('gallery/albums', 'public');
         }
 
         $album->update($validated);
@@ -111,7 +111,7 @@ class GalleryController extends Controller
         ]);
 
         if ($request->hasFile('img')) {
-            $validated['img'] = $request->file('img')->store('photos', 'public');
+            $validated['img'] = $request->file('img')->store('gallery/photos', 'public');
         }
 
         Foto::create($validated);
@@ -137,7 +137,7 @@ class GalleryController extends Controller
             'img' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        $path = $request->file('img')->store('photos', 'public');
+        $path = $request->file('img')->store('gallery/photos', 'public');
 
         Foto::create([
             'id_album' => $album->id,
@@ -187,7 +187,7 @@ class GalleryController extends Controller
         if ($sourceType === 'youtube') {
             $validated['source'] = $this->convertToEmbed($validated['source_url']);
         } elseif ($request->hasFile('source_file')) {
-            $validated['source'] = $request->file('source_file')->store('videos', 'public');
+            $validated['source'] = $request->file('source_file')->store('gallery/videos', 'public');
         }
 
         unset($validated['source_type'], $validated['source_url'], $validated['source_file']);
@@ -227,7 +227,7 @@ class GalleryController extends Controller
             if ($video->source && !str_contains($video->source, 'youtube') && \Storage::disk('public')->exists($video->source)) {
                 \Storage::disk('public')->delete($video->source);
             }
-            $validated['source'] = $request->file('source_file')->store('videos', 'public');
+            $validated['source'] = $request->file('source_file')->store('gallery/videos', 'public');
         }
 
         unset($validated['source_type'], $validated['source_url'], $validated['source_file']);

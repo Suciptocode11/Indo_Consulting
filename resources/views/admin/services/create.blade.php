@@ -3,6 +3,8 @@
 @section('title', 'Tambah Program')
 @section('page-title', 'Tambah Program/Layanan')
 
+@include('admin.partials.image-upload-assets')
+
 @section('content')
 <div class="card" style="max-width: 720px;">
     <form method="POST" action="{{ route('admin.services.store') }}" enctype="multipart/form-data">
@@ -39,8 +41,13 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Gambar</label>
-                <input type="file" name="img" accept="image/*">
-                <div class="help">Format: JPG, PNG, WebP. Max 2MB.</div>
+                @include('admin.partials.image-upload-widget', [
+                    'name' => 'img',
+                    'key'  => 'img',
+                    'value' => null,
+                    'arrayInput' => false
+                ])
+                <div class="help" style="margin-top:8px;">Format: JPG, PNG, WebP. Max 5MB.</div>
             </div>
             <div class="form-group">
                 <label>Status *</label>

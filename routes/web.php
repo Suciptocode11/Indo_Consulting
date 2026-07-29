@@ -35,6 +35,7 @@ Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/program', [PageController::class, 'program'])->name('program');
 Route::get('/program/{slug}', [PageController::class, 'programShow'])->name('program.show');
 Route::get('/portfolio', [PageController::class, 'portfolio'])->name('portfolio');
+Route::get('/portfolio/{slug}', [PageController::class, 'portfolioShow'])->name('portfolio.show');
 Route::get('/partners-clients', [PageController::class, 'partnersClients'])->name('partners-clients');
 Route::get('/kontak-kami', [PageController::class, 'kontakKami'])->name('kontak-kami');
 Route::get('/karir', [PageController::class, 'karir'])->name('karir');

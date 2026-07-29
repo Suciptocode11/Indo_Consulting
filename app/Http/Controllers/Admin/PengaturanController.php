@@ -42,7 +42,7 @@ class PengaturanController extends Controller
             if ($pengaturan->logo && \Storage::disk('public')->exists($pengaturan->logo)) {
                 \Storage::disk('public')->delete($pengaturan->logo);
             }
-            $validated['logo'] = $request->file('logo')->store('logos', 'public');
+            $validated['logo'] = $request->file('logo')->store('settings', 'public');
         }
 
         $pengaturan->update($validated);

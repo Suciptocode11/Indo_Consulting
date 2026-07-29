@@ -144,4 +144,31 @@ class PageController extends Controller
             'otherBlogs' => $otherBlogs,
         ]);
     }
+
+    public function portfolioShow($slug)
+    {
+        $project = Project::where('slug', $slug)
+            ->where('status', 'Show')
+            ->with(['kategoriProject', 'service', 'photos'])
+            ->firstOrFail();
+
+        // Auto-increment hit counter if available
+        if (isset($project->hit)) {
+            $project->increment('hit');
+        }
+
+        // Other projects for "Proyek Lainnya" section
+        $otherProjects = Project::where('status', 'Show')
+            ->where('id', '!=', $project->id)
+            ->with('kategoriProject')
+            ->orderByDesc('id')
+            ->limit(3)
+            ->get();
+
+        return view('pages.portfolio-show', [
+            'project'       => $project,
+            'otherProjects' => $otherProjects,
+            'pageContent'   => PageContent::getPage('portfolio'),
+        ]);
+    }
 }

@@ -198,43 +198,31 @@
             </a>
         </div>
 
-        {{-- FEATURED + GRID layout (NOT equal columns) --}}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" data-stagger>
-            @if($projects->isNotEmpty())
-            @php $featured = $projects->shift(); @endphp
-            <div class="reveal lg:row-span-2 bg-white rounded-2xl overflow-hidden soft-shadow-md border border-outline-variant/60 card-hover group flex flex-col">
-                <div class="relative overflow-hidden h-80 lg:h-full lg:min-h-[400px]">
-                    <img alt="{{ $featured->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $featured->img && !str_starts_with($featured->img, 'http') ? asset('storage/' . $featured->img) : $featured->img }}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                <div class="p-8 flex flex-col flex-1">
-                    <span class="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-3 py-1.5 rounded-full text-label-sm font-semibold mb-4 w-fit">
-                        {{ $featured->kategoriProject->title ?? '' }}
-                    </span>
-                    <h3 class="text-headline-md font-outfit font-semibold text-primary mb-3 flex-1">{{ $featured->title }}</h3>
-                    <p class="text-body-md text-on-surface-variant leading-relaxed mb-5">{{ $featured->content ?? '' }}</p>
-                    <a href="{{ route('portfolio') }}" class="inline-flex items-center gap-1.5 text-secondary text-label-md font-semibold group-hover:gap-3 transition-all duration-200">
-                        Lihat Detail <span class="material-symbols-outlined text-lg">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger>
             @foreach($projects as $proj)
-            <div class="reveal bg-white rounded-2xl overflow-hidden soft-shadow-md border border-outline-variant/60 card-hover group flex flex-col">
-                <div class="relative overflow-hidden h-48">
+            <div class="reveal bg-white rounded-2xl overflow-hidden soft-shadow-md border border-outline-variant/60 card-hover group flex flex-col h-full">
+                <a href="{{ route('portfolio.show', $proj->slug) }}" class="relative overflow-hidden h-56 block">
                     <img alt="{{ $proj->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $proj->img && !str_starts_with($proj->img, 'http') ? asset('storage/' . $proj->img) : $proj->img }}">
                     <div class="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                <div class="p-6 flex flex-col flex-1">
-                    <span class="text-secondary text-label-sm font-semibold mb-2">{{ $proj->kategoriProject->title ?? '' }}</span>
-                    <h3 class="text-headline-sm font-outfit font-semibold text-primary flex-1">{{ $proj->title }}</h3>
-                    <a href="{{ route('portfolio') }}" class="mt-4 inline-flex items-center gap-1 text-secondary text-label-md font-semibold group-hover:gap-2 transition-all duration-200">
-                        Detail <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </a>
+                </a>
+                <div class="p-6 flex flex-col flex-grow">
+                    <span class="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-3 py-1.5 rounded-full text-label-sm font-semibold mb-3 w-fit">
+                        {{ $proj->kategoriProject->title ?? '' }}
+                    </span>
+                    <h3 class="text-headline-sm font-outfit font-semibold text-primary mb-2 flex-grow">
+                        <a href="{{ route('portfolio.show', $proj->slug) }}" class="hover:text-secondary transition-colors">
+                            {{ $proj->title }}
+                        </a>
+                    </h3>
+                    <p class="text-body-sm text-on-surface-variant leading-relaxed line-clamp-3 mb-4">{{ $proj->content ?? '' }}</p>
+                    <div class="pt-4 border-t border-outline-variant/20 mt-auto">
+                        <a href="{{ route('portfolio.show', $proj->slug) }}" class="inline-flex items-center gap-1.5 text-secondary text-label-md font-semibold group-hover:gap-2.5 transition-all duration-200">
+                            Lihat Detail <span class="material-symbols-outlined text-base">arrow_forward</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             @endforeach
-            @endif
         </div>
     </div>
 </section>

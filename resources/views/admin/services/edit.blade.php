@@ -3,6 +3,8 @@
 @section('title', 'Edit Program')
 @section('page-title', 'Edit Program/Layanan')
 
+@include('admin.partials.image-upload-assets')
+
 @section('content')
 <div class="card" style="max-width: 720px;">
     <form method="POST" action="{{ route('admin.services.update', $service) }}" enctype="multipart/form-data">
@@ -38,17 +40,13 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Gambar</label>
-                @if($service->img)
-                    <div style="margin-bottom: 8px;">
-                        @if(str_starts_with($service->img, 'http'))
-                            <img src="{{ $service->img }}" style="height: 80px; border-radius: 8px; object-fit: cover;">
-                        @else
-                            <img src="{{ asset('storage/' . $service->img) }}" style="height: 80px; border-radius: 8px; object-fit: cover;">
-                        @endif
-                    </div>
-                @endif
-                <input type="file" name="img" accept="image/*">
-                <div class="help">Kosongkan jika tidak ingin mengganti.</div>
+                @include('admin.partials.image-upload-widget', [
+                    'name' => 'img',
+                    'key'  => 'img',
+                    'value' => $service->img,
+                    'arrayInput' => false
+                ])
+                <div class="help" style="margin-top:8px;">Format: JPG, PNG, WebP. Max 5MB.</div>
             </div>
             <div class="form-group">
                 <label>Status *</label>

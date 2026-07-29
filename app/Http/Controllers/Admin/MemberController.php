@@ -67,7 +67,7 @@ class MemberController extends Controller
         }
 
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('members', 'public');
+            $validated['foto'] = $request->file('foto')->store('members/photos', 'public');
         }
 
         if ($request->hasFile('cv')) {
@@ -118,7 +118,7 @@ class MemberController extends Controller
             if ($member->foto && \Storage::disk('public')->exists($member->foto)) {
                 \Storage::disk('public')->delete($member->foto);
             }
-            $validated['foto'] = $request->file('foto')->store('members', 'public');
+            $validated['foto'] = $request->file('foto')->store('members/photos', 'public');
         }
 
         if ($request->hasFile('cv')) {

@@ -13,7 +13,7 @@ class UploadController extends Controller
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
-        $path = $request->file('file')->store('uploads', 'public');
+        $path = $request->file('file')->store('editor-uploads', 'public');
 
         return response()->json([
             'url' => asset('storage/' . $path),

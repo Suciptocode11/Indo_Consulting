@@ -39,57 +39,9 @@
             @if($clients->isEmpty())
                 <p class="text-center text-on-surface-variant py-12">Belum ada data mitra/klien.</p>
             @else
-                {{-- Featured Partners (first 4, larger) --}}
-                @if($clients->count() > 4)
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    @foreach($clients->take(4) as $client)
-                    <div class="reveal bg-white rounded-2xl border border-outline-variant/40 p-6 flex flex-col items-center text-center card-hover group soft-shadow"
-                         x-show="filter === 'all' || filter === '{{ $client->sector ?? '' }}'"
-                         x-transition>
-                        @if($client->img)
-                            <img src="{{ asset('storage/' . $client->img) }}" alt="{{ $client->title }}" class="w-14 h-14 rounded-xl object-cover mb-4 group-hover:scale-105 transition-transform duration-300">
-                        @else
-                            <div class="w-14 h-14 rounded-xl bg-surface-container flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-3xl text-on-surface-variant">corporate_fare</span>
-                            </div>
-                        @endif
-                        <p class="text-body-lg font-outfit font-semibold text-primary leading-snug">{{ $client->title }}</p>
-                        @if($client->sector)
-                            <span class="mt-2 text-label-sm text-on-surface-variant">{{ $client->sector }}</span>
-                        @endif
-                    </div>
-                    @endforeach
-                </div>
-                @endif
-
-                {{-- Supporting Partners (remaining, smaller) --}}
-                @if($clients->count() > 4)
-                <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-                    @foreach($clients->slice(4) as $client)
-                    <div class="reveal bg-white rounded-xl border border-outline-variant/40 p-4 flex flex-col items-center text-center card-hover group"
-                         x-show="filter === 'all' || filter === '{{ $client->sector ?? '' }}'"
-                         x-transition>
-                        @if($client->img)
-                            <img src="{{ asset('storage/' . $client->img) }}" alt="{{ $client->title }}" class="w-10 h-10 rounded-lg object-cover mb-3 group-hover:scale-105 transition-transform duration-300">
-                        @else
-                            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-xl text-on-surface-variant">corporate_fare</span>
-                            </div>
-                        @endif
-                        <p class="text-label-md font-outfit font-semibold text-primary leading-snug">{{ $client->title }}</p>
-                        @if($client->sector)
-                            <span class="mt-1 text-label-sm text-on-surface-variant">{{ $client->sector }}</span>
-                        @endif
-                    </div>
-                    @endforeach
-                </div>
-                @endif
-
-                {{-- If 4 or less, single grid --}}
-                @if($clients->count() <= 4)
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     @foreach($clients as $client)
-                    <div class="reveal bg-white rounded-2xl border border-outline-variant/40 p-6 flex flex-col items-center text-center card-hover group soft-shadow"
+                    <div class="reveal bg-white rounded-2xl border border-outline-variant/40 p-6 flex flex-col items-center text-center card-hover group soft-shadow h-full"
                          x-show="filter === 'all' || filter === '{{ $client->sector ?? '' }}'"
                          x-transition>
                         @if($client->img)
@@ -99,14 +51,13 @@
                                 <span class="material-symbols-outlined text-3xl text-on-surface-variant">corporate_fare</span>
                             </div>
                         @endif
-                        <p class="text-body-lg font-outfit font-semibold text-primary leading-snug">{{ $client->title }}</p>
+                        <p class="text-body-lg font-outfit font-semibold text-primary leading-snug flex-grow flex items-center justify-center">{{ $client->title }}</p>
                         @if($client->sector)
                             <span class="mt-2 text-label-sm text-on-surface-variant">{{ $client->sector }}</span>
                         @endif
                     </div>
                     @endforeach
                 </div>
-                @endif
             @endif
         </div>
     </div>

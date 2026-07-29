@@ -79,6 +79,13 @@ class ServiceController extends Controller
             $validated['slug'] = Str::slug($validated['title']);
         }
 
+        if ($request->input('remove_img_img')) {
+            if ($service->img && \Storage::disk('public')->exists($service->img)) {
+                \Storage::disk('public')->delete($service->img);
+            }
+            $validated['img'] = null;
+        }
+
         if ($request->hasFile('img')) {
             if ($service->img && \Storage::disk('public')->exists($service->img)) {
                 \Storage::disk('public')->delete($service->img);

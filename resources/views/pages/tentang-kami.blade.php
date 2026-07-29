@@ -34,8 +34,16 @@
                 </div>
             </div>
             <div class="reveal">
+                @php
+                    $aboutImageDefault = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcWNYerVWBJoiV54oU70du3c4R4QDo9dm3eKvXSBge11qvyH-g1z1SHxiZNspBjS_Q1QoSBYG05Sqg1zSvr1QPDIrVtk9sOjjf8eekbHgucKP3Yi9EHQGveE8jwaAVdSM0agwbTGGfyGCppkdQ4lguEoO3ZXz0rVYSKAbir6cUe0eapraMq7EwrT_BCu3HiP928UfYCHeelH075l0zQgWU5r592ZlqbTpASzHn4a3c32FGuJ7nKc81zeBL5kHD7US2ETGYjMjNDQ';
+                    $aboutImageSrc = (!empty($pageContent['about_image']))
+                        ? (str_starts_with($pageContent['about_image'], 'http')
+                            ? $pageContent['about_image']
+                            : asset('storage/' . $pageContent['about_image']))
+                        : $aboutImageDefault;
+                @endphp
                 <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcWNYerVWBJoiV54oU70du3c4R4QDo9dm3eKvXSBge11qvyH-g1z1SHxiZNspBjS_Q1QoSBYG05Sqg1zSvr1QPDIrVtk9sOjjf8eekbHgucKP3Yi9EHQGveE8jwaAVdSM0agwbTGGfyGCppkdQ4lguEoO3ZXz0rVYSKAbir6cUe0eapraMq7EwrT_BCu3HiP928UfYCHeelH075l0zQgWU5r592ZlqbTpASzHn4a3c32FGuJ7nKc81zeBL5kHD7US2ETGYjMjNDQ"
+                    src="{{ $aboutImageSrc }}"
                     alt="Tim Indo Consulting"
                     class="w-full h-[400px] object-cover rounded-2xl shadow-sm border border-outline-variant/30"
                 >
