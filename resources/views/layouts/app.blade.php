@@ -751,6 +751,89 @@
         .gt-mobile-lang:hover { background: rgba(187,0,39,0.06); }
         .gt-mobile-lang.active { color: #bb0027; font-weight: 700; }
 
+        /* ===== Translate Search Input ===== */
+        .gt-search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .gt-search input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+        }
+        .gt-search input::placeholder {
+            color: rgba(255,255,255,0.35);
+        }
+        .gt-search .gt-search-icon {
+            color: rgba(255,255,255,0.35);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .gt-search-clear {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.35);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            flex-shrink: 0;
+            transition: color 150ms ease;
+        }
+        .gt-search-clear:hover { color: rgba(255,255,255,0.7); }
+        /* Mobile search */
+        .gt-mobile-search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .gt-mobile-search input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+        }
+        .gt-mobile-search input::placeholder { color: #94a3b8; }
+        .gt-mobile-search .gt-search-icon {
+            color: #94a3b8;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .gt-mobile-search .gt-search-clear {
+            color: #94a3b8;
+        }
+        .gt-mobile-search .gt-search-clear:hover { color: #475569; }
+        /* No results message */
+        .gt-no-results {
+            padding: 16px 14px;
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+        }
+        .gt-no-results-mobile {
+            padding: 16px 12px;
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
         /* ===================================================
            HIDE GOOGLE TRANSLATE BANNER — Multi-layer attack
            =================================================== */
@@ -951,6 +1034,13 @@
                         </button>
                         <div class="gt-dropdown" id="gtDropdown">
                             <div class="gt-dropdown-header">Pilih Bahasa</div>
+                            <div class="gt-search">
+                                <span class="material-symbols-outlined gt-search-icon">search</span>
+                                <input type="text" id="gtSearchInput" placeholder="Cari bahasa..." autocomplete="off">
+                                <button class="gt-search-clear" id="gtSearchClear" type="button" style="display:none;">
+                                    <span class="material-symbols-outlined" style="font-size:14px;">close</span>
+                                </button>
+                            </div>
                             <div class="gt-lang-list" id="gtLangList"></div>
                         </div>
                     </div>
@@ -1019,7 +1109,15 @@
                         <span>Terjemahkan &nbsp;<span id="gtMobileFlag">🇮🇩</span> <span id="gtMobileName">Indonesia</span></span>
                         <span class="material-symbols-outlined text-base ml-auto" id="gtMobileChevron">expand_more</span>
                     </button>
-                    <div class="gt-mobile-sub" id="gtMobileSub"></div>
+                    <div class="gt-mobile-sub" id="gtMobileSub">
+                        <div class="gt-mobile-search">
+                            <span class="material-symbols-outlined gt-search-icon">search</span>
+                            <input type="text" id="gtMobileSearchInput" placeholder="Cari bahasa..." autocomplete="off">
+                            <button class="gt-search-clear" id="gtMobileSearchClear" type="button" style="display:none;">
+                                <span class="material-symbols-outlined" style="font-size:14px;">close</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1198,23 +1296,115 @@
     <script>
         // ─── Language list ──────────────────────────────────────────────────────
         const GT_LANGUAGES = [
-            { code: 'id', name: 'Indonesia',   flag: '🇮🇩' },
-            { code: 'en', name: 'English',     flag: '🇺🇸' },
-            { code: 'ar', name: 'Arab',        flag: '🇸🇦' },
-            { code: 'zh-CN', name: 'Mandarin', flag: '🇨🇳' },
-            { code: 'ja', name: 'Jepang',      flag: '🇯🇵' },
-            { code: 'ko', name: 'Korea',       flag: '🇰🇷' },
-            { code: 'ms', name: 'Melayu',      flag: '🇲🇾' },
-            { code: 'fr', name: 'Perancis',    flag: '🇫🇷' },
-            { code: 'de', name: 'Jerman',      flag: '🇩🇪' },
-            { code: 'es', name: 'Spanyol',     flag: '🇪🇸' },
-            { code: 'pt', name: 'Portugis',    flag: '🇧🇷' },
-            { code: 'ru', name: 'Rusia',       flag: '🇷🇺' },
-            { code: 'hi', name: 'Hindi',       flag: '🇮🇳' },
-            { code: 'tr', name: 'Turki',       flag: '🇹🇷' },
-            { code: 'nl', name: 'Belanda',     flag: '🇳🇱' },
-            { code: 'th', name: 'Thailand',    flag: '🇹🇭' },
-            { code: 'vi', name: 'Vietnam',     flag: '🇻🇳' },
+            { code: 'id', name: 'Indonesia', flag: '🇮🇩' },
+            { code: 'en', name: 'Inggris', flag: '🇺🇸' },
+            { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
+            { code: 'sq', name: 'Albania', flag: '🇦🇱' },
+            { code: 'am', name: 'Amharik', flag: '🇪🇹' },
+            { code: 'ar', name: 'Arab', flag: '🇸🇦' },
+            { code: 'hy', name: 'Armenia', flag: '🇦🇲' },
+            { code: 'az', name: 'Azerbaijan', flag: '🇦🇿' },
+            { code: 'eu', name: 'Basque', flag: '🏴' },
+            { code: 'be', name: 'Belarusia', flag: '🇧🇾' },
+            { code: 'bn', name: 'Bengali', flag: '🇧🇩' },
+            { code: 'bs', name: 'Bosnia', flag: '🇧🇦' },
+            { code: 'bg', name: 'Bulgaria', flag: '🇧🇬' },
+            { code: 'ca', name: 'Katala', flag: '🏴' },
+            { code: 'ceb', name: 'Cebuano', flag: '🇵🇭' },
+            { code: 'zh-CN', name: 'Mandarin (Sederhana)', flag: '🇨🇳' },
+            { code: 'zh-TW', name: 'Mandarin (Tradisional)', flag: '🇹🇼' },
+            { code: 'co', name: 'Korsika', flag: '🇫🇷' },
+            { code: 'hr', name: 'Kroasia', flag: '🇭🇷' },
+            { code: 'cs', name: 'Ceko', flag: '🇨🇿' },
+            { code: 'da', name: 'Denmark', flag: '🇩🇰' },
+            { code: 'nl', name: 'Belanda', flag: '🇳🇱' },
+            { code: 'eo', name: 'Esperanto', flag: '🌍' },
+            { code: 'et', name: 'Estonia', flag: '🇪🇪' },
+            { code: 'fi', name: 'Finlandia', flag: '🇫🇮' },
+            { code: 'fr', name: 'Perancis', flag: '🇫🇷' },
+            { code: 'fy', name: 'Frisia', flag: '🇳🇱' },
+            { code: 'gl', name: 'Galisia', flag: '🇪🇸' },
+            { code: 'ka', name: 'Georgia', flag: '🇬🇪' },
+            { code: 'de', name: 'Jerman', flag: '🇩🇪' },
+            { code: 'el', name: 'Yunani', flag: '🇬🇷' },
+            { code: 'gu', name: 'Gujarat', flag: '🇮🇳' },
+            { code: 'ht', name: 'Kreol Haiti', flag: '🇭🇹' },
+            { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
+            { code: 'haw', name: 'Hawaii', flag: '🇺🇸' },
+            { code: 'he', name: 'Ibrani', flag: '🇮🇱' },
+            { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
+            { code: 'hmn', name: 'Hmong', flag: '🌏' },
+            { code: 'hu', name: 'Hungaria', flag: '🇭🇺' },
+            { code: 'is', name: 'Islandia', flag: '🇮🇸' },
+            { code: 'ig', name: 'Igbo', flag: '🇳🇬' },
+            { code: 'ga', name: 'Irlandia', flag: '🇮🇪' },
+            { code: 'it', name: 'Italia', flag: '🇮🇹' },
+            { code: 'ja', name: 'Jepang', flag: '🇯🇵' },
+            { code: 'jv', name: 'Jawa', flag: '🇮🇩' },
+            { code: 'kn', name: 'Kannada', flag: '🇮🇳' },
+            { code: 'kk', name: 'Kazakhstan', flag: '🇰🇿' },
+            { code: 'km', name: 'Khmer', flag: '🇰🇭' },
+            { code: 'rw', name: 'Kinyarwanda', flag: '🇷🇼' },
+            { code: 'ko', name: 'Korea', flag: '🇰🇷' },
+            { code: 'ku', name: 'Kurdi', flag: '🌍' },
+            { code: 'ky', name: 'Kirgiz', flag: '🇰🇬' },
+            { code: 'lo', name: 'Laos', flag: '🇱🇦' },
+            { code: 'la', name: 'Latin', flag: '🏛️' },
+            { code: 'lv', name: 'Latvia', flag: '🇱🇻' },
+            { code: 'lt', name: 'Lithuania', flag: '🇱🇹' },
+            { code: 'lb', name: 'Luksemburg', flag: '🇱🇺' },
+            { code: 'mk', name: 'Makedonia', flag: '🇲🇰' },
+            { code: 'mg', name: 'Malagasi', flag: '🇲🇬' },
+            { code: 'ms', name: 'Melayu', flag: '🇲🇾' },
+            { code: 'ml', name: 'Malayalam', flag: '🇮🇳' },
+            { code: 'mt', name: 'Malta', flag: '🇲🇹' },
+            { code: 'mi', name: 'Maori', flag: '🇳🇿' },
+            { code: 'mr', name: 'Marathi', flag: '🇮🇳' },
+            { code: 'mn', name: 'Mongolia', flag: '🇲🇳' },
+            { code: 'my', name: 'Myanmar', flag: '🇲🇲' },
+            { code: 'ne', name: 'Nepal', flag: '🇳🇵' },
+            { code: 'no', name: 'Norwegia', flag: '🇳🇴' },
+            { code: 'ny', name: 'Chichewa', flag: '🇲🇼' },
+            { code: 'or', name: 'Odia', flag: '🇮🇳' },
+            { code: 'ps', name: 'Pashto', flag: '🇦🇫' },
+            { code: 'fa', name: 'Persia', flag: '🇮🇷' },
+            { code: 'pl', name: 'Polandia', flag: '🇵🇱' },
+            { code: 'pt', name: 'Portugis', flag: '🇧🇷' },
+            { code: 'pa', name: 'Punjabi', flag: '🇮🇳' },
+            { code: 'ro', name: 'Rumania', flag: '🇷🇴' },
+            { code: 'ru', name: 'Rusia', flag: '🇷🇺' },
+            { code: 'sm', name: 'Samoa', flag: '🇼🇸' },
+            { code: 'gd', name: 'Gaelik Skotlandia', flag: '🏴' },
+            { code: 'sr', name: 'Serbia', flag: '🇷🇸' },
+            { code: 'st', name: 'Sesotho', flag: '🇱🇸' },
+            { code: 'sn', name: 'Shona', flag: '🇿🇼' },
+            { code: 'sd', name: 'Sindhi', flag: '🇵🇰' },
+            { code: 'si', name: 'Sinhala', flag: '🇱🇰' },
+            { code: 'sk', name: 'Slovak', flag: '🇸🇰' },
+            { code: 'sl', name: 'Slovenia', flag: '🇸🇮' },
+            { code: 'so', name: 'Somali', flag: '🇸🇴' },
+            { code: 'es', name: 'Spanyol', flag: '🇪🇸' },
+            { code: 'su', name: 'Sunda', flag: '🇮🇩' },
+            { code: 'sw', name: 'Swahili', flag: '🌍' },
+            { code: 'sv', name: 'Swedia', flag: '🇸🇪' },
+            { code: 'tl', name: 'Filipino', flag: '🇵🇭' },
+            { code: 'tg', name: 'Tajik', flag: '🇹🇯' },
+            { code: 'ta', name: 'Tamil', flag: '🇮🇳' },
+            { code: 'tt', name: 'Tatar', flag: '🇷🇺' },
+            { code: 'te', name: 'Telugu', flag: '🇮🇳' },
+            { code: 'th', name: 'Thailand', flag: '🇹🇭' },
+            { code: 'tr', name: 'Turki', flag: '🇹🇷' },
+            { code: 'tk', name: 'Turkmen', flag: '🇹🇲' },
+            { code: 'uk', name: 'Ukraina', flag: '🇺🇦' },
+            { code: 'ur', name: 'Urdu', flag: '🇵🇰' },
+            { code: 'ug', name: 'Uighur', flag: '🇨🇳' },
+            { code: 'uz', name: 'Uzbek', flag: '🇺🇿' },
+            { code: 'vi', name: 'Vietnam', flag: '🇻🇳' },
+            { code: 'cy', name: 'Wales', flag: '🏴' },
+            { code: 'xh', name: 'Xhosa', flag: '🇿🇦' },
+            { code: 'yi', name: 'Yiddish', flag: '🌍' },
+            { code: 'yo', name: 'Yoruba', flag: '🇳🇬' },
+            { code: 'zu', name: 'Zulu', flag: '🇿🇦' },
         ];
 
         let gtCurrentCode = 'id';
@@ -1231,11 +1421,18 @@
         })();
 
         // ─── Render desktop dropdown list ──────────────────────────────────────
-        function gtRenderList() {
+        let gtSearchQuery = '';
+        function gtRenderList(query) {
             const list = document.getElementById('gtLangList');
             if (!list) return;
             list.innerHTML = '';
-            GT_LANGUAGES.forEach(lang => {
+            const q = (query || '').toLowerCase();
+            const filtered = q ? GT_LANGUAGES.filter(l => l.name.toLowerCase().includes(q) || l.code.toLowerCase().includes(q)) : GT_LANGUAGES;
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="gt-no-results">Bahasa tidak ditemukan</div>';
+                return;
+            }
+            filtered.forEach(lang => {
                 const btn = document.createElement('button');
                 btn.className = 'gt-lang-item' + (lang.code === gtCurrentCode ? ' active' : '');
                 btn.innerHTML = `<span class="gt-flag">${lang.flag}</span>${lang.name}`;
@@ -1245,11 +1442,54 @@
         }
 
         // ─── Render mobile language list ───────────────────────────────────────
-        function gtRenderMobileList() {
+        let gtMobileSearchQuery = '';
+        function gtRenderMobileList(query) {
             const sub = document.getElementById('gtMobileSub');
             if (!sub) return;
+            // Preserve search input when re-rendering
+            const existingSearch = sub.querySelector('.gt-mobile-search');
             sub.innerHTML = '';
-            GT_LANGUAGES.forEach(lang => {
+            // Rebuild search input
+            const searchDiv = document.createElement('div');
+            searchDiv.className = 'gt-mobile-search';
+            searchDiv.innerHTML = '<span class="material-symbols-outlined gt-search-icon">search</span>' +
+                '<input type="text" id="gtMobileSearchInput" placeholder="Cari bahasa..." autocomplete="off">' +
+                '<button class="gt-search-clear" id="gtMobileSearchClear" type="button" style="display:none;">' +
+                '<span class="material-symbols-outlined" style="font-size:14px;">close</span></button>';
+            sub.appendChild(searchDiv);
+            // Restore search value and events
+            const mInput = document.getElementById('gtMobileSearchInput');
+            const mClear = document.getElementById('gtMobileSearchClear');
+            if (mInput) {
+                mInput.value = gtMobileSearchQuery;
+                mInput.addEventListener('input', function() {
+                    gtMobileSearchQuery = this.value;
+                    if (mClear) mClear.style.display = this.value ? 'flex' : 'none';
+                    gtRenderMobileList(this.value);
+                    // Re-focus and restore cursor position
+                    const newInput = document.getElementById('gtMobileSearchInput');
+                    if (newInput) { newInput.focus(); newInput.setSelectionRange(newInput.value.length, newInput.value.length); }
+                });
+            }
+            if (mClear) {
+                mClear.addEventListener('click', function() {
+                    gtMobileSearchQuery = '';
+                    gtRenderMobileList('');
+                    const newInput = document.getElementById('gtMobileSearchInput');
+                    if (newInput) newInput.focus();
+                });
+            }
+            // Render filtered list
+            const q = (query || '').toLowerCase();
+            const filtered = q ? GT_LANGUAGES.filter(l => l.name.toLowerCase().includes(q) || l.code.toLowerCase().includes(q)) : GT_LANGUAGES;
+            if (filtered.length === 0) {
+                const noRes = document.createElement('div');
+                noRes.className = 'gt-no-results-mobile';
+                noRes.textContent = 'Bahasa tidak ditemukan';
+                sub.appendChild(noRes);
+                return;
+            }
+            filtered.forEach(lang => {
                 const btn = document.createElement('button');
                 btn.className = 'gt-mobile-lang' + (lang.code === gtCurrentCode ? ' active' : '');
                 btn.innerHTML = `<span style="font-size:15px;">${lang.flag}</span>${lang.name}`;
@@ -1308,6 +1548,13 @@
             const dd  = document.getElementById('gtDropdown');
             if (btn) btn.classList.remove('open');
             if (dd)  dd.classList.remove('open');
+            // Reset search
+            gtSearchQuery = '';
+            const si = document.getElementById('gtSearchInput');
+            const sc = document.getElementById('gtSearchClear');
+            if (si) si.value = '';
+            if (sc) sc.style.display = 'none';
+            gtRenderList('');
         }
 
         // ─── Mobile accordion toggle ───────────────────────────────────────────
@@ -1326,6 +1573,29 @@
             var navBtn = document.getElementById('gtNavBtn');
             if (navBtn) navBtn.addEventListener('click', function(e) { e.stopPropagation(); gtToggle(); });
 
+            // Desktop search
+            var gtSearchInput = document.getElementById('gtSearchInput');
+            var gtSearchClear = document.getElementById('gtSearchClear');
+            if (gtSearchInput) {
+                gtSearchInput.addEventListener('input', function() {
+                    gtSearchQuery = this.value;
+                    if (gtSearchClear) gtSearchClear.style.display = this.value ? 'flex' : 'none';
+                    gtRenderList(this.value);
+                    // Re-focus
+                    var newInput = document.getElementById('gtSearchInput');
+                    if (newInput) { newInput.focus(); newInput.setSelectionRange(newInput.value.length, newInput.value.length); }
+                });
+                gtSearchInput.addEventListener('click', function(e) { e.stopPropagation(); });
+            }
+            if (gtSearchClear) {
+                gtSearchClear.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    gtSearchQuery = '';
+                    gtRenderList('');
+                    if (gtSearchInput) { gtSearchInput.value = ''; gtSearchInput.focus(); }
+                });
+            }
+
             // Close on outside click
             document.addEventListener('click', function(e) {
                 var wrap = document.getElementById('gtNavWrap');
@@ -1342,7 +1612,7 @@
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'id',
-                includedLanguages: 'id,en,ar,zh-CN,ja,ko,ms,fr,de,es,pt,ru,hi,tr,nl,th,vi',
+                includedLanguages: '',
                 autoDisplay: false
             }, 'google_translate_element');
         }
