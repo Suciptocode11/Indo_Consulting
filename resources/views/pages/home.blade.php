@@ -6,80 +6,70 @@
 @section('content')
 
 {{-- ===== HERO SECTION ===== --}}
-<section class="hero-pattern relative overflow-hidden min-h-[100dvh] flex items-center">
-    <div class="max-w-container mx-auto px-responsive relative z-10 py-24 w-full">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
+<section class="hero-pattern relative overflow-hidden min-h-[calc(100dvh-4rem)] lg:min-h-[calc(100dvh-4.5rem)] flex items-center">
+    {{-- Decorative Background Ambient Glow --}}
+    <div class="absolute top-1/4 -left-20 w-72 h-72 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-10 -right-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-container mx-auto px-responsive relative z-10 py-16 sm:py-24 lg:py-20 w-full">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
             {{-- Left: Copy --}}
-            <div class="space-y-8">
-                <div class="reveal">
+            <div class="space-y-8 sm:space-y-10">
+                {{-- Eyebrow Badge --}}
+                <div class="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-sm font-medium">
+                    <span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+                    <span>{{ $pageContent['hero_eyebrow'] ?? 'Lembaga Konsultan Terkemuka' }}</span>
                 </div>
 
-                <h1 class="text-4xl md:text-5xl lg:text-display-lg font-outfit font-bold text-white leading-[1.1] tracking-tight reveal" style="letter-spacing:-0.02em;">
+                {{-- Headline --}}
+                <h1 class="text-7xl sm:text-8xl md:text-9xl lg:text-display-lg font-outfit font-bold text-white leading-[1.05] tracking-tight reveal" style="letter-spacing:-0.03em;">
                     {{ $pageContent['hero_heading_1'] ?? 'Bergerak' }}<br>
                     <span class="text-secondary">{{ $pageContent['hero_heading_2'] ?? 'Bertumbuh' }}</span><br>
                     {{ $pageContent['hero_heading_3'] ?? 'Bersama' }}
                 </h1>
 
-                <p class="text-body-lg text-white/70 max-w-lg font-outfit leading-relaxed reveal">
-                    {{ $pageContent['hero_description'] ?? '' }}
+                {{-- Description --}}
+                <p class="text-2xl sm:text-3xl lg:text-body-lg text-white/80 max-w-xl font-outfit leading-relaxed reveal">
+                    {{ $pageContent['hero_description'] ?? 'Indo Consulting adalah lembaga konsultan terkemuka bidang Manajemen Pendidikan, Pengembangan SDM, Keuangan, Teknologi Informasi, serta Hukum dan Perizinan.' }}
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-4 reveal">
-                    <a href="{{ route('kontak-kami') }}" class="btn-primary inline-block px-8 py-4 rounded-xl text-label-md font-outfit font-semibold text-center shadow-lg">
-                        {{ $pageContent['hero_btn_primary'] ?? 'Konsultasi Sekarang' }}
+                {{-- Action Buttons --}}
+                <div class="flex flex-col sm:flex-row gap-4 reveal pt-4">
+                    <a href="{{ route('kontak-kami') }}" class="btn-primary inline-flex items-center justify-center gap-2 px-10 py-5 rounded-xl sm:rounded-full text-lg sm:text-label-md font-outfit font-semibold text-center shadow-lg shadow-secondary/20 hover:shadow-secondary/30 transition-all">
+                        <span>{{ $pageContent['hero_btn_primary'] ?? 'Konsultasi Sekarang' }}</span>
+                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
                     </a>
-                    <a href="{{ route('tentang-kami') }}" class="btn-ghost-light inline-block px-8 py-4 rounded-xl text-label-md font-outfit font-semibold text-center">
-                        {{ $pageContent['hero_btn_secondary'] ?? 'Pelajari Lebih Lanjut' }}
+                    <a href="{{ route('tentang-kami') }}" class="btn-ghost-light inline-flex items-center justify-center gap-2 px-10 py-5 rounded-xl sm:rounded-full text-lg sm:text-label-md font-outfit font-semibold text-center">
+                        <span>{{ $pageContent['hero_btn_secondary'] ?? 'Pelajari Lebih Lanjut' }}</span>
                     </a>
                 </div>
             </div>
 
-            {{-- Right: Image --}}
+            {{-- Right / Desktop Only Image (Hidden on Mobile) --}}
             <div class="hidden lg:block relative reveal">
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/15 group">
                     @if(!empty($pageContent['hero_image']) && $pageContent['hero_image'] !== '')
                         <img
                             src="{{ str_starts_with($pageContent['hero_image'], 'http') ? $pageContent['hero_image'] : asset('storage/' . $pageContent['hero_image']) }}"
                             alt="Tim konsultan profesional Indo Consulting"
-                            class="w-full h-[520px] object-cover"
+                            class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
                         >
                     @else
                         <img
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJFJscYh7O0kxSXjZlMyZuqxWqdUpYYCu1sVrD-G0Jw-iNN6VqOAACQ1cui_xjtTV8XvuAWWiKxOqhkT4BVC6S0wRZQGI5PO0k3EkIHypoA7YYT0l-sZD8TfGWo2nS1s3biW5_HOFUU5MgClto_rwZ3eWXYQwAvBMg8z0s_gUbEdMrk5x7x-VKsL02lWws4-WgqVGH-_aq2LCSNiaxPOTQfiaHbI_ORTl_56lCbCNu52JqqvWvzRut3x_70dOGU4NewkEkF96koQ"
                             alt="Tim konsultan profesional Indo Consulting"
-                            class="w-full h-[520px] object-cover"
+                            class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
                         >
                     @endif
                     <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    {{-- Bottom curve --}}
-    <div class="absolute bottom-0 left-0 right-0 h-10 bg-surface-container" style="clip-path: ellipse(150% 100% at 50% 100%)"></div>
-</section>
-
-{{-- ===== STATS SECTION (moved from hero) ===== --}}
-<section class="py-12 bg-surface-container border-b border-outline-variant/40">
-    <div class="max-w-container mx-auto px-responsive">
-        <div class="flex flex-wrap justify-center gap-12 lg:gap-20 reveal">
-            <div class="text-center">
-                <p class="text-4xl font-outfit font-bold text-primary">{{ $pageContent['stats_1_number'] ?? '17' }}</p>
-                <p class="text-label-sm text-on-surface-variant tracking-wide mt-1">{{ $pageContent['stats_1_label'] ?? 'Tahun Pengalaman' }}</p>
-            </div>
-            <div class="text-center">
-                <p class="text-4xl font-outfit font-bold text-primary">{{ $pageContent['stats_2_number'] ?? '127' }}</p>
-                <p class="text-label-sm text-on-surface-variant tracking-wide mt-1">{{ $pageContent['stats_2_label'] ?? 'Klien Puas' }}</p>
-            </div>
-            <div class="text-center">
-                <p class="text-4xl font-outfit font-bold text-primary">{{ $pageContent['stats_3_number'] ?? '538' }}</p>
-                <p class="text-label-sm text-on-surface-variant tracking-wide mt-1">{{ $pageContent['stats_3_label'] ?? 'Proyek Selesai' }}</p>
-            </div>
         </div>
     </div>
 </section>
+
 
 {{-- ===== PROGRAM SECTION ===== --}}
 <section class="py-32 bg-surface" id="program">
@@ -235,16 +225,28 @@
 
     {{-- Marquee --}}
     <div class="relative overflow-hidden">
+        {{-- Side Gradient Fades for Premium Look --}}
+        <div class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-surface-container to-transparent z-10"></div>
+        <div class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-surface-container to-transparent z-10"></div>
+
         <div class="marquee-wrap">
-            @php $marqueeItems = $clients; @endphp
+            @php
+                $marqueeItems = collect($clients);
+                // Multiplikasi item jika kurang dari 12 agar 1 set marquee cukup lebar mengisi layar monitor besar tanpa jeda/gap
+                if ($marqueeItems->count() > 0) {
+                    while ($marqueeItems->count() < 12) {
+                        $marqueeItems = $marqueeItems->concat($clients);
+                    }
+                }
+            @endphp
             {{-- Set 1 --}}
             <div class="marquee-set">
                 @foreach($marqueeItems as $partner)
-                <div class="flex items-center px-6 py-4 flex-shrink-0">
+                <div class="flex items-center px-4 py-2 flex-shrink-0">
                     @if($partner->img && !str_starts_with($partner->img, 'http'))
-                        <img src="{{ asset('storage/' . $partner->img) }}" alt="{{ $partner->title }}" class="h-[5.5rem] w-auto object-contain">
+                        <img src="{{ asset('storage/' . $partner->img) }}" alt="{{ $partner->title }}" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105">
                     @else
-                        <span class="text-label-lg font-outfit font-semibold text-on-surface-variant/40 whitespace-nowrap">{{ $partner->title }}</span>
+                        <span class="text-label-lg font-outfit font-semibold text-on-surface-variant/80 whitespace-nowrap">{{ $partner->title }}</span>
                     @endif
                 </div>
                 @endforeach
@@ -252,11 +254,11 @@
             {{-- Set 2 (duplicate untuk seamless loop) --}}
             <div class="marquee-set">
                 @foreach($marqueeItems as $partner)
-                <div class="flex items-center px-6 py-4 flex-shrink-0">
+                <div class="flex items-center px-4 py-2 flex-shrink-0">
                     @if($partner->img && !str_starts_with($partner->img, 'http'))
-                        <img src="{{ asset('storage/' . $partner->img) }}" alt="{{ $partner->title }}" class="h-[5.5rem] w-auto object-contain">
+                        <img src="{{ asset('storage/' . $partner->img) }}" alt="{{ $partner->title }}" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105">
                     @else
-                        <span class="text-label-lg font-outfit font-semibold text-on-surface-variant/40 whitespace-nowrap">{{ $partner->title }}</span>
+                        <span class="text-label-lg font-outfit font-semibold text-on-surface-variant/80 whitespace-nowrap">{{ $partner->title }}</span>
                     @endif
                 </div>
                 @endforeach

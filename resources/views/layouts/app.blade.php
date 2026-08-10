@@ -190,8 +190,9 @@
             overflow: hidden;
         }
         #mobile-menu.open {
-            max-height: 500px;
+            max-height: calc(100vh - 4rem);
             opacity: 1;
+            overflow-y: auto;
         }
 
         /* Card hover lift with premium spring physics */
@@ -236,19 +237,22 @@
 
         /* Marquee for partners */
         @keyframes marquee {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            0%   { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
         }
         .marquee-wrap {
             display: flex;
             width: max-content;
+            user-select: none;
         }
         .marquee-set {
             display: flex;
-            gap: 4rem;
-            padding-right: 4rem;
-            animation: marquee 20s linear infinite;
+            align-items: center;
+            gap: 3rem;
+            padding-right: 3rem;
+            animation: marquee 35s linear infinite;
             flex-shrink: 0;
+            will-change: transform;
         }
         .marquee-wrap:hover .marquee-set {
             animation-play-state: paused;
@@ -727,8 +731,12 @@
             display: none;
             flex-direction: column;
             gap: 2px;
-            padding-left: 44px;
-            margin-top: 2px;
+            padding-left: 12px;
+            margin-top: 6px;
+            max-height: 260px;
+            overflow-y: auto;
+            border-left: 2px solid rgba(187,0,39,0.15);
+            margin-left: 12px;
         }
         .gt-mobile-sub.open { display: flex; }
         .gt-mobile-lang {
@@ -1230,6 +1238,11 @@
             hamburgerIcon.textContent = mobileMenu.classList.contains('open') ? 'close' : 'menu';
         });
 
+        function closeMobileMenu() {
+            if (mobileMenu) mobileMenu.classList.remove('open');
+            if (hamburgerIcon) hamburgerIcon.textContent = 'menu';
+        }
+
         // Mobile info submenu
         function toggleMobileInfo() {
             const submenu = document.getElementById('mobile-info-submenu');
@@ -1435,6 +1448,7 @@
             filtered.forEach(lang => {
                 const btn = document.createElement('button');
                 btn.className = 'gt-lang-item' + (lang.code === gtCurrentCode ? ' active' : '');
+                btn.dataset.code = lang.code;
                 btn.innerHTML = `<span class="gt-flag">${lang.flag}</span>${lang.name}`;
                 btn.addEventListener('click', () => gtSelectLang(lang));
                 list.appendChild(btn);
@@ -1491,9 +1505,14 @@
             }
             filtered.forEach(lang => {
                 const btn = document.createElement('button');
+                btn.type = 'button';
                 btn.className = 'gt-mobile-lang' + (lang.code === gtCurrentCode ? ' active' : '');
+                btn.dataset.code = lang.code;
                 btn.innerHTML = `<span style="font-size:15px;">${lang.flag}</span>${lang.name}`;
-                btn.addEventListener('click', () => gtSelectLang(lang));
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    gtSelectLang(lang);
+                });
                 sub.appendChild(btn);
             });
         }
@@ -1513,25 +1532,61 @@
         function gtSelectLang(lang) {
             gtCurrentCode = lang.code;
             gtUpdateIndicators();
-            gtRenderList();
-            gtRenderMobileList();
-            gtClose();
 
-            // Try using hidden Google combo
-            const combo = document.querySelector('.goog-te-combo');
-            if (combo) {
-                combo.value = lang.code;
-                combo.dispatchEvent(new Event('change'));
-            } else {
+            // Update active state on desktop list without full re-render
+            const desktopItems = document.querySelectorAll('#gtLangList .gt-lang-item');
+            desktopItems.forEach(function(item) {
+                item.classList.toggle('active', item.dataset.code === lang.code);
+            });
+
+            // Update active state on mobile list without full re-render
+            const mobileItems = document.querySelectorAll('#gtMobileSub .gt-mobile-lang');
+            mobileItems.forEach(function(item) {
+                item.classList.toggle('active', item.dataset.code === lang.code);
+            });
+
+            // Tutup dropdown desktop dan mobile menu
+            gtClose();
+            closeMobileMenu();
+
+            // Jalankan operasi terjemahan setelah DOM selesai
+            setTimeout(function() {
+                // ── Kembali ke bahasa Indonesia (tampilan asli) ────────────────────
                 if (lang.code === 'id') {
+                    // Strategi 1: Gunakan combo Google Translate dengan nilai kosong untuk restore
+                    const combo = document.querySelector('.goog-te-combo');
+                    if (combo) {
+                        combo.value = '';
+                        combo.dispatchEvent(new Event('change'));
+                    }
+
+                    // Strategi 2: Coba gunakan API restore resmi Google Translate
+                    try {
+                        const instance = google.translate.TranslateElement.getInstance();
+                        if (instance && instance.restore) {
+                            instance.restore();
+                        }
+                    } catch(e) {}
+
+                    // Strategi 3 (paling andal): Hapus cookie googtrans dan reload halaman
                     document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
                     document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname;
+                    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + location.hostname;
+                    window.location.reload();
+                    return;
+                }
+
+                // ── Pindah ke bahasa lain ──────────────────────────────────────────
+                const combo = document.querySelector('.goog-te-combo');
+                if (combo) {
+                    combo.value = lang.code;
+                    combo.dispatchEvent(new Event('change'));
                 } else {
                     document.cookie = `googtrans=/id/${lang.code}; path=/`;
                     document.cookie = `googtrans=/id/${lang.code}; path=/; domain=${location.hostname}`;
+                    window.location.reload();
                 }
-                window.location.reload();
-            }
+            }, 80);
         }
 
         // ─── Toggle / Close dropdown ───────────────────────────────────────────

@@ -24,14 +24,7 @@
                 <p class="text-body-md text-on-surface-variant leading-relaxed">
                     {{ $pageContent['about_text_2'] ?? 'Didukung oleh tim profesional berpengalaman, Indo Consulting berkomitmen memberikan layanan berkualitas tinggi dalam bidang Strategi Bisnis, Keuangan & Investasi, Hukum, serta Riset, Pendidikan, dan Pelatihan.' }}
                 </p>
-                <div class="flex gap-10 pt-4 border-t border-outline-variant/30">
-                    @foreach([[$pageContent['stats_1_number'] ?? '17', $pageContent['stats_1_label'] ?? 'Tahun Pengalaman'], [$pageContent['stats_2_number'] ?? '127', $pageContent['stats_2_label'] ?? 'Klien Puas'], [$pageContent['stats_3_number'] ?? '538', $pageContent['stats_3_label'] ?? 'Proyek Selesai']] as $s)
-                    <div>
-                        <p class="text-2xl font-outfit font-bold text-primary">{{ $s[0] }}</p>
-                        <p class="text-label-sm text-on-surface-variant tracking-wide mt-1">{{ $s[1] }}</p>
-                    </div>
-                    @endforeach
-                </div>
+
             </div>
             <div class="reveal">
                 @php
