@@ -50,7 +50,7 @@ class PageController extends Controller
     public function portfolio()
     {
         return view('pages.portfolio', [
-            'projects'    => Project::where('status', 'Show')->with(['kategoriProject', 'service'])->get(),
+            'projects'    => Project::where('status', 'Show')->with(['kategoriProject', 'service'])->orderByDesc('id')->paginate(9)->withQueryString(),
             'kategoris'   => \App\Models\KategoriProject::all(),
             'pageContent' => PageContent::getPage('portfolio'),
         ]);
@@ -126,7 +126,7 @@ class PageController extends Controller
 
     public function blogShow($slug)
     {
-        $blog = Blog::where('slug', $slug)->where('status', 'Show')->firstOrFail();
+        $blog = Blog::where('slug', $slug)->where('status', 'Show')->with('kategori')->firstOrFail();
 
         // Auto-increment view counter
         $blog->increment('hit');

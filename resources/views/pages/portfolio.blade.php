@@ -70,6 +70,13 @@
             </div>
             @endforelse
         </div>
+
+        {{-- Pagination --}}
+        @if($projects->hasPages())
+        <div class="mt-12 flex justify-center">
+            {{ $projects->links() }}
+        </div>
+        @endif
     </div>
 </section>
 

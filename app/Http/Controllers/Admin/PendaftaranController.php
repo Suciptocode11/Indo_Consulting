@@ -57,7 +57,7 @@ class PendaftaranController extends Controller
             'keahlian'        => $pendaftaran->keahlian,
             'no_anggota'      => $noAnggota,
             'tanggal_anggota' => now()->toDateString(),
-            'slug'            => \Illuminate\Support\Str::slug($pendaftaran->nama),
+            'slug'            => \Illuminate\Support\Str::slug($pendaftaran->nama) . '-' . time(),
             'status'          => 'Show',
         ]);
 
@@ -103,8 +103,8 @@ class PendaftaranController extends Controller
         $tgl = $tanggalLahir ? Carbon::parse($tanggalLahir) : Carbon::create(2000, 1, 1);
         $tglCode = $tgl->format('d') . $tgl->format('m') . $tgl->format('y');
 
-        // No urut
-        $count = Member::count() + 1;
+        // No urut (use max id to avoid duplicates after deletions)
+        $count = (Member::max('id') ?? 0) + 1;
         $noUrut = str_pad($count, 3, '0', STR_PAD_LEFT);
 
         return "{$provinsi}.{$perusahaan}.{$tglCode}.{$noUrut}";

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Services\ImageOptimizer;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -37,7 +38,7 @@ class ClientController extends Controller
         ]);
 
         if ($request->hasFile('img')) {
-            $validated['img'] = $request->file('img')->store('clients', 'public');
+            $validated['img'] = ImageOptimizer::optimizeAndStore($request->file('img'), 'clients', 800, 85);
         }
 
         Client::create($validated);
@@ -64,7 +65,7 @@ class ClientController extends Controller
             if ($client->img && \Storage::disk('public')->exists($client->img)) {
                 \Storage::disk('public')->delete($client->img);
             }
-            $validated['img'] = $request->file('img')->store('clients', 'public');
+            $validated['img'] = ImageOptimizer::optimizeAndStore($request->file('img'), 'clients', 800, 85);
         }
 
         $client->update($validated);

@@ -53,6 +53,18 @@ class PendaftaranController extends Controller
 
         Pendaftaran::create($validated);
 
+        // Notify admin via email (non-blocking)
+        try {
+            \Illuminate\Support\Facades\Mail::to('partner@indoconsulting.id')
+                ->send(new \App\Mail\PendaftaranNotification(
+                    $validated['nama'] ?? 'Unknown',
+                    $validated['email'] ?? '',
+                    $validated['posisi'] ?? '-'
+                ));
+        } catch (\Exception $e) {
+            // Silently fail — don't block user submission if email fails
+        }
+
         return redirect()->route('karir')->with('success', 'Lamaran berhasil dikirim! Tim kami akan menghubungi Anda.');
     }
 }

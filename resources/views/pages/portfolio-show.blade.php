@@ -2,6 +2,7 @@
 
 @section('title', $project->title . ' - Portfolio Indo Consulting')
 @section('description', Str::limit(strip_tags($project->content ?? $project->title), 160))
+@section('og_image', $project->img ? (str_starts_with($project->img, 'http') ? $project->img : asset('storage/' . $project->img)) : asset('favicon.ico'))
 
 @section('content')
 

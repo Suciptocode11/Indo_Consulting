@@ -18,8 +18,25 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\PendaftaranController as AdminPendaftaranController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\RateLimiter;
 use App\Http\Controllers\PageController;
+
+/*
+|--------------------------------------------------------------------------
+| Rate Limiters
+|--------------------------------------------------------------------------
+*/
+RateLimiter::for('login', function () {
+    return \Illuminate\Cache\RateLimiting\Limit::perMinute(5)->by('ip');
+});
+RateLimiter::for('pendaftaran', function () {
+    return \Illuminate\Cache\RateLimiting\Limit::perMinute(3)->by('ip');
+});
+RateLimiter::for('upload', function () {
+    return \Illuminate\Cache\RateLimiting\Limit::perMinute(30)->by('ip');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +57,10 @@ Route::get('/partners-clients', [PageController::class, 'partnersClients'])->nam
 Route::get('/kontak-kami', [PageController::class, 'kontakKami'])->name('kontak-kami');
 Route::get('/karir', [PageController::class, 'karir'])->name('karir');
 Route::get('/karir/daftar', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
-Route::post('/karir/daftar', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+Route::post('/karir/daftar', [PendaftaranController::class, 'store'])->name('pendaftaran.store')->middleware('throttle:pendaftaran');
+
+// SEO
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +68,7 @@ Route::post('/karir/daftar', [PendaftaranController::class, 'store'])->name('pen
 |--------------------------------------------------------------------------
 */
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.post');
+Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.post')->middleware('throttle:login');
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +104,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('kategori-project', \App\Http\Controllers\Admin\KategoriProjectController::class)->except(['show']);
 
     // Upload (Summernote image)
-    Route::post('/upload-image', [UploadController::class, 'uploadImage']);
+    Route::post('/upload-image', [UploadController::class, 'uploadImage'])->middleware('throttle:upload');
 
     // Gallery (unified)
     Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');

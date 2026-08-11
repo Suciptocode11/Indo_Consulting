@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Services\ImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -49,7 +50,7 @@ class ServiceController extends Controller
         }
 
         if ($request->hasFile('img')) {
-            $validated['img'] = $request->file('img')->store('services', 'public');
+            $validated['img'] = ImageOptimizer::optimizeAndStore($request->file('img'), 'services', 1200, 85);
         }
 
         Service::create($validated);
@@ -90,7 +91,7 @@ class ServiceController extends Controller
             if ($service->img && \Storage::disk('public')->exists($service->img)) {
                 \Storage::disk('public')->delete($service->img);
             }
-            $validated['img'] = $request->file('img')->store('services', 'public');
+            $validated['img'] = ImageOptimizer::optimizeAndStore($request->file('img'), 'services', 1200, 85);
         }
 
         $service->update($validated);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\KategoriProject;
+use App\Services\ImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -54,7 +55,7 @@ class ProjectController extends Controller
         }
 
         if ($request->hasFile('img')) {
-            $validated['img'] = $request->file('img')->store('projects', 'public');
+            $validated['img'] = ImageOptimizer::optimizeAndStore($request->file('img'), 'projects', 1200, 85);
         }
 
         Project::create($validated);
@@ -91,7 +92,7 @@ class ProjectController extends Controller
             if ($project->img && \Storage::disk('public')->exists($project->img)) {
                 \Storage::disk('public')->delete($project->img);
             }
-            $validated['img'] = $request->file('img')->store('projects', 'public');
+            $validated['img'] = ImageOptimizer::optimizeAndStore($request->file('img'), 'projects', 1200, 85);
         }
 
         $project->update($validated);

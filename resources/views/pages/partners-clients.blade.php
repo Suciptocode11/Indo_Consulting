@@ -45,9 +45,11 @@
                          x-show="filter === 'all' || filter === '{{ $client->sector ?? '' }}'"
                          x-transition>
                         @if($client->img)
-                            <img src="{{ asset('storage/' . $client->img) }}" alt="{{ $client->title }}" class="w-14 h-14 rounded-xl object-cover mb-4 group-hover:scale-105 transition-transform duration-300">
+                            <div class="w-20 h-20 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('storage/' . $client->img) }}" alt="{{ $client->title }}" class="max-w-full max-h-full object-contain">
+                            </div>
                         @else
-                            <div class="w-14 h-14 rounded-xl bg-surface-container flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
+                            <div class="w-20 h-20 rounded-xl bg-surface-container flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
                                 <span class="material-symbols-outlined text-3xl text-on-surface-variant">corporate_fare</span>
                             </div>
                         @endif

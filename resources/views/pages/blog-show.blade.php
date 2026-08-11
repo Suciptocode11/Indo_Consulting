@@ -2,6 +2,7 @@
 
 @section('title', $blog->title . ' - Indo Consulting')
 @section('description', $blog->caption ?? $blog->title)
+@section('og_image', $blog->img ? (str_starts_with($blog->img, 'http') ? $blog->img : asset('storage/' . $blog->img)) : asset('favicon.ico'))
 
 @section('content')
 

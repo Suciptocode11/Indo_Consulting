@@ -4,10 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Indo Consulting - Bergerak Bertumbuh Bersama')</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <meta name="description" content="@yield('description', 'Indo Consulting adalah lembaga konsultan terkemuka bidang Manajemen Pendidikan, Pengembangan SDM, Keuangan dan Pajak, Teknologi Informasi, Hukum dan Perizinan.')">
 
-    {{-- Tailwind CSS CDN --}}
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    {{-- Open Graph / Social Sharing --}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Indo Consulting">
+    <meta property="og:title" content="@yield('title', 'Indo Consulting - Bergerak Bertumbuh Bersama')">
+    <meta property="og:description" content="@yield('description', 'Indo Consulting adalah lembaga konsultan terkemuka bidang Manajemen Pendidikan, Pengembangan SDM, Keuangan dan Pajak, Teknologi Informasi, Hukum dan Perizinan.')">
+    <meta property="og:image" content="@yield('og_image', asset('favicon.ico'))">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <link rel="sitemap" type="application/xml" href="{{ route('sitemap') }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'Indo Consulting')">
+    <meta name="twitter:description" content="@yield('description', '')">
+    <meta name="twitter:image" content="@yield('og_image', asset('favicon.ico'))">
+
+    {{-- Tailwind CSS via Vite (production build) --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Alpine.js --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
@@ -15,100 +29,6 @@
     {{-- Google Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-
-    <script id="tailwind-config">
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        // Professional B2B Consulting - Slate Scale (Cool Gray)
-                        // PRIMARY - Brand Navy (keep)
-                        "primary":          "#020220",
-                        "primary-container": "#1e293b",  // slate-800 (was #1a1b3a)
-                        "on-primary":       "#ffffff",
-                        "on-primary-container": "#94a3b8",  // slate-400 (was #8383a8)
-
-                        // SECONDARY - Brand Red (keep)
-                        "secondary":        "#bb0027",
-                        "secondary-container": "#dc2626",  // red-600 (was #e0283c)
-                        "on-secondary":     "#ffffff",
-                        "on-secondary-container": "#ffffff",
-
-                        // NEUTRALS - Slate Scale (NEW - cool grays with clear contrast)
-                        "surface":          "#f8fafc",  // slate-50 (was #fbf9f8)
-                        "surface-container": "#e2e8f0",  // slate-200 (was #efeded)
-                        "surface-container-low": "#f1f5f9",  // slate-100 (was #f5f3f3)
-                        "surface-container-high": "#cbd5e1",  // slate-300 (was #eae8e7)
-                        "surface-container-highest": "#cbd5e1",  // slate-300 (was #e4e2e2)
-                        "surface-container-lowest": "#ffffff",  // pure white
-                        "surface-dim":      "#64748b",  // slate-500 (was #dbd9d9)
-                        "surface-bright":   "#f8fafc",  // slate-50 (was #fbf9f8)
-                        "surface-variant":  "#94a3b8",  // slate-400 (was #e4e2e2)
-
-                        // TEXT COLORS - Slate Scale
-                        "on-surface":       "#0f172a",  // slate-900 (was #1b1c1c)
-                        "on-surface-variant": "#475569",  // slate-600 (was #47464e)
-
-                        // BACKGROUND
-                        "background":       "#f8fafc",  // slate-50 (was #fbf9f8)
-                        "on-background":    "#0f172a",  // slate-900 (was #1b1c1c)
-
-                        // BORDERS
-                        "outline":          "#94a3b8",  // slate-400 (was #77767e)
-                        "outline-variant":  "#cbd5e1",  // slate-300 (was #c8c5ce)
-
-                        // INVERSE (for dark sections)
-                        "inverse-surface":  "#1e293b",  // slate-800 (was #303030)
-                        "inverse-on-surface": "#f1f5f9",  // slate-100 (was #f2f0f0)
-                        "inverse-primary":  "#94a3b8",  // slate-400 (was #c3c3eb)
-
-                        // ERROR (keep)
-                        "error":            "#ba1a1a",
-                        "on-error":         "#ffffff",
-
-                        // TERTIARY (keep)
-                        "tertiary":         "#040607",
-                        "tertiary-container": "#1c1f21",
-                    },
-                    fontFamily: {
-                        "outfit":   ["Outfit", "sans-serif"],
-                        "sans":     ["Outfit", "system-ui", "sans-serif"],
-                    },
-                    fontSize: {
-                        "display-lg":   ["56px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
-                        "headline-lg":  ["40px", { lineHeight: "1.2", fontWeight: "600" }],
-                        "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "600" }],
-                        "headline-md":  ["32px", { lineHeight: "1.3", fontWeight: "600" }],
-                        "headline-sm":  ["24px", { lineHeight: "1.4", fontWeight: "600" }],
-                        "body-lg":      ["18px", { lineHeight: "1.6", fontWeight: "400" }],
-                        "body-md":      ["16px", { lineHeight: "1.6", fontWeight: "400" }],
-                        "label-md":     ["14px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "600" }],
-                        "label-sm":     ["12px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "500" }],
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "sm":      "0.25rem",
-                        "md":      "0.375rem",
-                        "lg":      "0.5rem",
-                        "xl":      "0.75rem",
-                        "2xl":     "1rem",
-                        "full":    "9999px",
-                    },
-                    maxWidth: {
-                        "container": "1280px",
-                    },
-                    spacing: {
-                        "block-gap":  "5rem",
-                        "gutter":     "2rem",
-                        "stack-sm":   "0.75rem",
-                        "stack-md":   "1.5rem",
-                        "stack-lg":   "3rem",
-                        "margin-x":   "1.5rem",
-                    },
-                },
-            },
-        }
-    </script>
 
     <style>
         .material-symbols-outlined {

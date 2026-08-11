@@ -95,7 +95,11 @@
                                 preg_match('/src="([^"]+)"/', $mapUrl, $m);
                                 $mapUrl = $m[1] ?? $mapUrl;
                             }
+                            // Sanitize: only allow google maps URLs
+                            $mapUrl = filter_var($mapUrl, FILTER_SANITIZE_URL);
+                            $isGoogleMaps = preg_match('#^https?://(www\.)?(google\.com/maps|maps\.google\.com|goo\.gl/maps|maps\.app\.goo\.gl)/#i', $mapUrl);
                         @endphp
+                        @if($isGoogleMaps)
                         <iframe
                             src="{{ $mapUrl }}"
                             width="100%"
@@ -106,6 +110,11 @@
                             referrerpolicy="no-referrer-when-downgrade"
                             title="Lokasi Indo Consulting - Denpasar, Bali">
                         </iframe>
+                        @else
+                        <div class="w-full h-full flex items-center justify-center bg-surface-container-low text-on-surface-variant">
+                            <p>Google Maps belum dikonfigurasi.</p>
+                        </div>
+                        @endif
                     @else
                         <div class="w-full h-full flex items-center justify-center bg-surface-container-low text-on-surface-variant">
                             <p>Google Maps belum dikonfigurasi.</p>
