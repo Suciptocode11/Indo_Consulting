@@ -41,6 +41,12 @@ class PendaftaranController extends Controller
             'link_facebook'    => 'nullable|string|max:255',
         ]);
 
+        // Extract provinsi name from "kode|nama" format
+        if (!empty($validated['provinsi']) && str_contains($validated['provinsi'], '|')) {
+            $parts = explode('|', $validated['provinsi']);
+            $validated['provinsi'] = $parts[1] ?? $parts[0];
+        }
+
         if ($request->hasFile('foto')) {
             $validated['foto'] = $request->file('foto')->store('pendaftaran/foto', 'public');
         }
@@ -53,18 +59,21 @@ class PendaftaranController extends Controller
 
         Pendaftaran::create($validated);
 
-        // Notify admin via email (non-blocking)
+        // Notify admin via email (non-blocking, silent fail)
         try {
-            \Illuminate\Support\Facades\Mail::to('partner@indoconsulting.id')
-                ->send(new \App\Mail\PendaftaranNotification(
-                    $validated['nama'] ?? 'Unknown',
-                    $validated['email'] ?? '',
-                    $validated['posisi'] ?? '-'
-                ));
+            if (class_exists(\App\Mail\PendaftaranNotification::class)) {
+                \Illuminate\Support\Facades\Mail::to('partner@indoconsulting.id')
+                    ->send(new \App\Mail\PendaftaranNotification(
+                        $validated['nama'] ?? 'Unknown',
+                        $validated['email'] ?? '',
+                        $validated['posisi'] ?? '-'
+                    ));
+            }
         } catch (\Exception $e) {
-            // Silently fail — don't block user submission if email fails
+            // Log the error but don't block the user
+            \Illuminate\Support\Facades\Log::error('Email notification failed: ' . $e->getMessage());
         }
 
-        return redirect()->route('karir')->with('success', 'Lamaran berhasil dikirim! Tim kami akan menghubungi Anda.');
+        return redirect()->back()->with('success', 'Lamaran berhasil dikirim! Tim kami akan menghubungi Anda.');
     }
 }

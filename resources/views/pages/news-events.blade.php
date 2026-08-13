@@ -42,7 +42,7 @@
                         @endif
                     </div>
                     <div class="p-8 flex flex-col justify-center">
-                        <div class="flex items-center gap-3 mb-4">
+                        <div class="flex items-center gap-3 mb-4 flex-wrap">
                             <span class="text-label-sm font-outfit font-semibold text-secondary">{{ $article->kategori->title ?? '' }}</span>
                             <span class="text-on-surface-variant/40">·</span>
                             <time class="text-label-sm text-on-surface-variant/70">{{ $article->date }}</time>
@@ -51,14 +51,20 @@
                         </div>
                         <h3 class="text-headline-md font-outfit font-semibold text-primary mb-4">{{ $article->title }}</h3>
                         <p class="text-body-lg text-on-surface-variant leading-relaxed mb-6">{{ $article->caption ?? '' }}</p>
+                        <div class="pt-4 border-t border-outline-variant/20">
+                            <span class="inline-flex items-center gap-2 text-label-lg font-outfit font-semibold text-secondary group-hover:gap-3 transition-all duration-300">
+                                Lihat Detail
+                                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </a>
             @else
             {{-- Supporting Articles (2-col grid) --}}
             @if($i === 1) <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> @endif
-                <a href="{{ route('blog.show', $article->slug) }}" class="reveal bg-white rounded-2xl overflow-hidden border border-outline-variant/60 soft-shadow-md card-hover group flex flex-col block" x-show="filter === 'all' || filter === '{{ $article->kategori->title ?? '' }}'" x-transition>
-                    <div class="relative h-48 overflow-hidden">
+                <a href="{{ route('blog.show', $article->slug) }}" class="reveal bg-white rounded-2xl overflow-hidden border border-outline-variant/60 soft-shadow-md card-hover group flex flex-col h-full" x-show="filter === 'all' || filter === '{{ $article->kategori->title ?? '' }}'" x-transition>
+                    <div class="relative h-48 overflow-hidden flex-shrink-0">
                         @if($article->img && !str_starts_with($article->img, 'http'))
                             <img src="{{ asset('storage/' . $article->img) }}" alt="{{ $article->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         @elseif($article->img)
@@ -68,15 +74,21 @@
                         @endif
                     </div>
                     <div class="p-6 flex flex-col flex-1">
-                        <div class="flex items-center gap-3 mb-3">
+                        <div class="flex items-center gap-3 mb-3 flex-wrap">
                             <span class="text-label-sm font-outfit font-semibold text-secondary">{{ $article->kategori->title ?? '' }}</span>
                             <span class="text-on-surface-variant/40">·</span>
                             <time class="text-label-sm text-on-surface-variant/70">{{ $article->date }}</time>
                             <span class="text-on-surface-variant/40">·</span>
                             <span class="text-label-sm text-on-surface-variant/70 flex items-center gap-1"><span class="material-symbols-outlined text-sm">visibility</span> {{ number_format($article->hit ?? 0) }}</span>
                         </div>
-                        <h3 class="text-body-lg font-outfit font-semibold text-primary mb-2">{{ $article->title }}</h3>
-                        <p class="text-body-md text-on-surface-variant leading-relaxed flex-1">{{ $article->caption ?? '' }}</p>
+                        <h3 class="text-body-lg font-outfit font-semibold text-primary mb-3 line-clamp-2">{{ $article->title }}</h3>
+                        <p class="text-body-md text-on-surface-variant leading-relaxed mb-4 flex-1 line-clamp-3">{{ $article->caption ?? '' }}</p>
+                        <div class="mt-auto pt-3 border-t border-outline-variant/20">
+                            <span class="inline-flex items-center gap-2 text-label-md font-outfit font-semibold text-secondary group-hover:gap-3 transition-all duration-300">
+                                Lihat Detail
+                                <span class="material-symbols-outlined text-base">arrow_forward</span>
+                            </span>
+                        </div>
                     </div>
                 </a>
             @if($loop->last) </div> @endif

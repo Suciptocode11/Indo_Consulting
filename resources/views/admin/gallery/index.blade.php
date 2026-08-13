@@ -66,30 +66,67 @@
     {{-- =================== TAB: FOTO =================== --}}
     <div x-show="tab === 'photos'" x-transition>
         <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
-            <form method="POST" action="{{ route('admin.gallery.foto-store') }}" enctype="multipart/form-data" style="display: flex; gap: 8px; align-items: center;">
+            <form method="POST" action="{{ route('admin.gallery.foto-store') }}" enctype="multipart/form-data" style="display: flex; gap: 8px; align-items: flex-end;">
                 @csrf
-                <input type="file" name="img" accept="image/*" required style="padding: 6px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-family: 'Outfit', sans-serif;">
-                <select name="id_album" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-family: 'Outfit', sans-serif;">
-                    <option value="">Standalone</option>
-                    @foreach($albums as $a)
-                        <option value="{{ $a->id }}">{{ $a->title }}</option>
-                    @endforeach
-                </select>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label style="font-size: 11px; color: #64748b; font-weight: 600; font-family: 'Outfit', sans-serif;">File Foto</label>
+                    <input type="file" name="img" accept="image/*" required style="padding: 6px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-family: 'Outfit', sans-serif;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label style="font-size: 11px; color: #64748b; font-weight: 600; font-family: 'Outfit', sans-serif;">Keterangan Foto</label>
+                    <input type="text" name="caption" placeholder="Contoh: Rapat Tim 2024..." style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-family: 'Outfit', sans-serif; width: 200px;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label style="font-size: 11px; color: #64748b; font-weight: 600; font-family: 'Outfit', sans-serif;">Album (Opsional)</label>
+                    <select name="id_album" style="padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; font-family: 'Outfit', sans-serif;">
+                        <option value="">Standalone</option>
+                        @foreach($albums as $a)
+                            <option value="{{ $a->id }}">{{ $a->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary btn-sm">Upload</button>
             </form>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px;">
             @forelse($photos as $foto)
-                <div style="position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc;">
+                <div x-data="{ editMode: false }" style="position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc;">
                     <img src="{{ asset('storage/' . $foto->img) }}" style="width: 100%; height: 140px; object-fit: cover;" alt="Foto">
-                    <div style="padding: 6px 8px; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 11px; color: #64748b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px;">{{ $foto->album->title ?? 'Standalone' }}</span>
-                        <form method="POST" action="{{ route('admin.gallery.foto-destroy', $foto) }}" onsubmit="return confirm('Hapus foto ini?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" style="background: none; border: none; cursor: pointer; color: #dc2626; padding: 2px;">
-                                <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
-                            </button>
+                    
+                    <!-- View Mode -->
+                    <div x-show="!editMode" style="padding: 6px 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; gap: 4px;">
+                            <div style="flex: 1; min-width: 0;">
+                                <span style="font-size: 11px; color: #64748b; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $foto->caption ?? ($foto->album->title ?? 'Standalone') }}">
+                                    {{ $foto->caption ?? ($foto->album->title ?? 'Standalone') }}
+                                </span>
+                            </div>
+                            <div style="display: flex; gap: 4px; flex-shrink: 0;">
+                                <button @click="editMode = true" style="background: none; border: none; cursor: pointer; color: #3b82f6; padding: 2px;" title="Edit Caption">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                                </button>
+                                <form method="POST" action="{{ route('admin.gallery.foto-destroy', $foto) }}" onsubmit="return confirm('Hapus foto ini?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; color: #dc2626; padding: 2px;">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Edit Mode -->
+                    <div x-show="editMode" style="padding: 6px 8px;">
+                        <form method="POST" action="{{ route('admin.gallery.foto-update', $foto) }}">
+                            @csrf @method('PUT')
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <input type="text" name="caption" value="{{ $foto->caption }}" placeholder="Keterangan foto..." style="width: 100%; padding: 4px 6px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 11px; font-family: 'Outfit', sans-serif;">
+                                <div style="display: flex; gap: 4px;">
+                                    <button type="submit" class="btn btn-primary" style="flex: 1; padding: 4px 8px; font-size: 10px;">Simpan</button>
+                                    <button type="button" @click="editMode = false" class="btn btn-secondary" style="flex: 1; padding: 4px 8px; font-size: 10px;">Batal</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

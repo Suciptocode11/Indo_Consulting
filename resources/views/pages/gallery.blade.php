@@ -65,6 +65,12 @@
             @foreach($standalonePhotos as $foto)
             <div class="reveal group relative rounded-2xl overflow-hidden aspect-square" x-show="filter === 'all' || filter === 'photo'" x-transition>
                 <img src="{{ asset('storage/' . $foto->img) }}" alt="Foto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                @if($foto->caption)
+                <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute bottom-3 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p class="text-white font-outfit font-semibold text-label-md leading-snug">{{ $foto->caption }}</p>
+                </div>
+                @endif
             </div>
             @endforeach
 
@@ -109,8 +115,14 @@
                         @else
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
                                 @foreach($album->photos as $foto)
-                                <div class="rounded-lg overflow-hidden aspect-square">
-                                    <img src="{{ asset('storage/' . $foto->img) }}" alt="Foto" class="w-full h-full object-cover">
+                                <div class="rounded-lg overflow-hidden aspect-square group relative">
+                                    <img src="{{ asset('storage/' . $foto->img) }}" alt="Foto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    @if($foto->caption)
+                                    <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="absolute bottom-2 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <p class="text-white font-outfit font-semibold text-label-sm leading-snug">{{ $foto->caption }}</p>
+                                    </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>

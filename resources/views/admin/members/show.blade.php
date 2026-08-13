@@ -61,10 +61,10 @@
                 <span class="material-symbols-outlined">print</span> Cetak
             </button>
         </div>
-        <div id="memberCard" style="max-width: 400px; margin: 0 auto; background: linear-gradient(135deg, #bb0027 0%, #8b0020 100%); border-radius: 20px; padding: 28px; color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.15);">
+        <div id="memberCard" style="max-width: 400px; margin: 0 auto; background: linear-gradient(135deg, #020220 0%, #010110 100%); border-radius: 20px; padding: 28px; color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.15);">
             <div style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 14px; margin-bottom: 14px;">
                 @if($pengaturan && $pengaturan->logo)
-                    <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="Logo" style="height: 40px; width: auto; margin: 0 auto; display: block;">
+                    <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="Logo" style="height: 40px; width: auto; margin: 0 auto; display: block; filter: brightness(0) invert(1);">
                 @else
                     <h2 style="font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 800; margin: 0; letter-spacing: 1px;">INDO CONSULTING</h2>
                 @endif

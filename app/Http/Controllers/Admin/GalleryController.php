@@ -108,6 +108,7 @@ class GalleryController extends Controller
         $validated = $request->validate([
             'img'      => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
             'id_album' => 'nullable|integer|exists:album,id',
+            'caption'  => 'nullable|string|max:255',
         ]);
 
         if ($request->hasFile('img')) {
@@ -118,6 +119,17 @@ class GalleryController extends Controller
 
         $tab = !empty($validated['id_album']) ? 'albums' : 'photos';
         return redirect()->route('admin.gallery.index', ['tab' => $tab])->with('success', 'Foto berhasil ditambahkan.');
+    }
+
+    public function fotoUpdate(Request $request, Foto $foto)
+    {
+        $validated = $request->validate([
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        $foto->update($validated);
+
+        return redirect()->route('admin.gallery.index', ['tab' => 'photos'])->with('success', 'Keterangan foto berhasil diupdate.');
     }
 
     public function fotoDestroy(Foto $foto)
@@ -135,6 +147,7 @@ class GalleryController extends Controller
     {
         $request->validate([
             'img' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'caption' => 'nullable|string|max:255',
         ]);
 
         $path = $request->file('img')->store('gallery/photos', 'public');
@@ -142,6 +155,7 @@ class GalleryController extends Controller
         Foto::create([
             'id_album' => $album->id,
             'img'      => $path,
+            'caption'  => $request->input('caption'),
         ]);
 
         return redirect()->route('admin.gallery.album-edit', $album)->with('success', 'Foto berhasil ditambahkan ke album.');

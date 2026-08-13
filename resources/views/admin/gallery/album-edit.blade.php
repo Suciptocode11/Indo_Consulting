@@ -61,6 +61,10 @@
                 <label style="font-size: 13px; font-weight: 600; color: #334155; display: block; margin-bottom: 4px;">Upload Foto Baru</label>
                 <input type="file" name="img" accept="image/*" required style="width: 100%; padding: 8px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: 'Outfit', sans-serif;">
             </div>
+            <div style="flex: 1;">
+                <label style="font-size: 13px; font-weight: 600; color: #334155; display: block; margin-bottom: 4px;">Keterangan Foto</label>
+                <input type="text" name="caption" placeholder="Contoh: Rapat Tim 2024..." style="width: 100%; padding: 8px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-family: 'Outfit', sans-serif;">
+            </div>
             <button type="submit" class="btn btn-primary btn-sm">Upload</button>
         </div>
     </form>
@@ -70,14 +74,47 @@
     @else
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;">
             @foreach($album->photos as $foto)
-                <div style="position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0;">
+                <div x-data="{ editMode: false }" style="position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; background: white;">
                     <img src="{{ asset('storage/' . $foto->img) }}" style="width: 100%; height: 130px; object-fit: cover;" alt="Foto">
-                    <form method="POST" action="{{ route('admin.gallery.album-foto-destroy', [$album, $foto]) }}" onsubmit="return confirm('Hapus foto ini?')">
-                        @csrf @method('DELETE')
-                        <button type="submit" style="position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; background: rgba(0,0,0,0.6); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                            <span class="material-symbols-outlined" style="font-size: 14px; color: white;">close</span>
-                        </button>
-                    </form>
+                    
+                    <!-- View Mode -->
+                    <div x-show="!editMode" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column;">
+                        <div style="flex: 1;"></div>
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); padding: 6px 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: end; gap: 4px;">
+                                @if($foto->caption)
+                                    <span style="font-size: 10px; color: white; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;" title="{{ $foto->caption }}">{{ $foto->caption }}</span>
+                                @else
+                                    <span style="font-size: 10px; color: rgba(255,255,255,0.6); flex: 1;">Tanpa caption</span>
+                                @endif
+                                <div style="display: flex; gap: 4px;">
+                                    <button @click="editMode = true" style="width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.9); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Edit Caption">
+                                        <span class="material-symbols-outlined" style="font-size: 14px; color: #3b82f6;">edit</span>
+                                    </button>
+                                    <form method="POST" action="{{ route('admin.gallery.album-foto-destroy', [$album, $foto]) }}" onsubmit="return confirm('Hapus foto ini?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" style="width: 24px; height: 24px; border-radius: 50%; background: rgba(0,0,0,0.6); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                            <span class="material-symbols-outlined" style="font-size: 14px; color: white;">close</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Edit Mode -->
+                    <div x-show="editMode" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); padding: 8px; display: flex; flex-direction: column; justify-content: center;">
+                        <form method="POST" action="{{ route('admin.gallery.foto-update', $foto) }}">
+                            @csrf @method('PUT')
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <input type="text" name="caption" value="{{ $foto->caption }}" placeholder="Keterangan foto..." style="width: 100%; padding: 6px 8px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 11px; font-family: 'Outfit', sans-serif;">
+                                <div style="display: flex; gap: 4px;">
+                                    <button type="submit" class="btn btn-primary" style="flex: 1; padding: 6px 8px; font-size: 10px;">Simpan</button>
+                                    <button type="button" @click="editMode = false" class="btn btn-secondary" style="flex: 1; padding: 6px 8px; font-size: 10px;">Batal</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             @endforeach
         </div>

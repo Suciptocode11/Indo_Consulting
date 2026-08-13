@@ -116,6 +116,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/gallery/album/{album}', [GalleryController::class, 'albumDestroy'])->name('gallery.album-destroy');
     // Foto
     Route::post('/gallery/foto', [GalleryController::class, 'fotoStore'])->name('gallery.foto-store');
+    Route::put('/gallery/foto/{foto}', [GalleryController::class, 'fotoUpdate'])->name('gallery.foto-update');
     Route::delete('/gallery/foto/{foto}', [GalleryController::class, 'fotoDestroy'])->name('gallery.foto-destroy');
     Route::post('/gallery/album/{album}/foto', [GalleryController::class, 'fotoStoreInAlbum'])->name('gallery.album-foto-store');
     Route::delete('/gallery/album/{album}/foto/{foto}', [GalleryController::class, 'fotoDestroyFromAlbum'])->name('gallery.album-foto-destroy');
