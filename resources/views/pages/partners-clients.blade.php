@@ -41,6 +41,34 @@
             @else
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     @foreach($clients as $client)
+                    @php
+                        $hasUrl = !empty($client->url);
+                        $url = $hasUrl ? $client->url : '#';
+                        // Ensure URL has protocol
+                        if ($hasUrl && !preg_match('/^https?:\/\//i', $url)) {
+                            $url = 'https://' . $url;
+                        }
+                    @endphp
+                    
+                    @if($hasUrl)
+                    <a href="{{ $url }}" target="_blank" rel="noopener noreferrer" class="reveal bg-white rounded-2xl border border-outline-variant/40 p-6 flex flex-col items-center text-center card-hover group soft-shadow h-full transition-all duration-300 hover:border-secondary/40 hover:shadow-xl cursor-pointer"
+                       x-show="filter === 'all' || filter === '{{ $client->sector ?? '' }}'"
+                       x-transition>
+                        @if($client->img)
+                            <div class="w-20 h-20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <img src="{{ asset('storage/' . $client->img) }}" alt="{{ $client->title }}" class="max-w-full max-h-full object-contain">
+                            </div>
+                        @else
+                            <div class="w-20 h-20 rounded-xl bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-symbols-outlined text-3xl text-on-surface-variant">corporate_fare</span>
+                            </div>
+                        @endif
+                        <p class="text-body-lg font-outfit font-semibold text-primary leading-snug flex-grow flex items-center justify-center group-hover:text-secondary transition-colors duration-300">{{ $client->title }}</p>
+                        @if($client->sector)
+                            <span class="mt-2 text-label-sm text-on-surface-variant">{{ $client->sector }}</span>
+                        @endif
+                    </a>
+                    @else
                     <div class="reveal bg-white rounded-2xl border border-outline-variant/40 p-6 flex flex-col items-center text-center card-hover group soft-shadow h-full"
                          x-show="filter === 'all' || filter === '{{ $client->sector ?? '' }}'"
                          x-transition>
@@ -58,6 +86,7 @@
                             <span class="mt-2 text-label-sm text-on-surface-variant">{{ $client->sector }}</span>
                         @endif
                     </div>
+                    @endif
                     @endforeach
                 </div>
             @endif

@@ -472,7 +472,7 @@
             font-family: 'Outfit', sans-serif;
             font-size: 13px;
             font-weight: 500;
-            color: rgba(255,255,255,0.85);
+            color: #1e293b;
             cursor: pointer;
             transition: background 150ms ease;
             border: none;
@@ -481,17 +481,24 @@
             text-align: left;
         }
         .gt-lang-item:hover {
-            background: rgba(255,255,255,0.08);
+            background: #f1f5f9;
         }
         .gt-lang-item.active {
-            background: rgba(187, 0, 39, 0.25);
-            color: #ff6b8a;
+            background: rgba(187, 0, 39, 0.08);
+            color: #bb0027;
             font-weight: 700;
         }
-        .gt-lang-item .gt-flag {
+        .gt-lang-item .gt-flag-img {
+            width: 22px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
             margin-right: 10px;
-            font-size: 16px;
-            line-height: 1;
+            display: inline-block;
+            vertical-align: middle;
         }
         /* Panel footer showing current language */
         .gt-panel-footer {
@@ -545,9 +552,16 @@
             fill: currentColor;
             flex-shrink: 0;
         }
-        .gt-nav-btn .gt-nav-flag {
-            font-size: 15px;
-            line-height: 1;
+        .gt-nav-btn .gt-nav-flag-img {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            flex-shrink: 0;
+            display: inline-block;
+            vertical-align: middle;
         }
         .gt-nav-btn .gt-nav-chevron {
             font-size: 16px;
@@ -563,9 +577,10 @@
             top: calc(100% + 10px);
             right: 0;
             width: 200px;
-            background: #1e2b1a;
+            background: #ffffff;
             border-radius: 14px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.08);
             z-index: 9999;
             overflow: hidden;
             display: flex;
@@ -582,25 +597,25 @@
             pointer-events: all;
         }
         .gt-dropdown-header {
-            background: #2d3d28;
+            background: #f8fafc;
             padding: 9px 14px;
             font-family: 'Outfit', sans-serif;
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 0.08em;
-            color: rgba(255,255,255,0.5);
+            color: #64748b;
             text-transform: uppercase;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
         .gt-lang-list {
             max-height: 240px;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.2) transparent;
+            scrollbar-color: rgba(0,0,0,0.15) transparent;
         }
         .gt-lang-list::-webkit-scrollbar { width: 4px; }
         .gt-lang-list::-webkit-scrollbar-track { background: transparent; }
-        .gt-lang-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .gt-lang-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
         .gt-lang-item {
             display: flex;
             align-items: center;
@@ -608,7 +623,7 @@
             font-family: 'Outfit', sans-serif;
             font-size: 13px;
             font-weight: 500;
-            color: rgba(255,255,255,0.85);
+            color: #1e293b;
             cursor: pointer;
             transition: background 130ms ease;
             border: none;
@@ -616,16 +631,24 @@
             width: 100%;
             text-align: left;
         }
-        .gt-lang-item:hover { background: rgba(255,255,255,0.08); }
+        .gt-lang-item:hover { background: #f1f5f9; }
         .gt-lang-item.active {
-            background: rgba(187,0,39,0.25);
-            color: #ff8fa3;
+            background: rgba(187,0,39,0.08);
+            color: #bb0027;
             font-weight: 700;
         }
-        .gt-lang-item .gt-flag {
-            margin-right: 9px;
-            font-size: 15px;
-            line-height: 1;
+        .gt-lang-item .gt-flag-img,
+        .gt-mobile-lang .gt-flag-img {
+            width: 22px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: middle;
         }
 
         /* Mobile translate row inside mobile menu */
@@ -685,8 +708,8 @@
             align-items: center;
             gap: 8px;
             padding: 8px 14px;
-            background: rgba(255,255,255,0.06);
-            border-bottom: 1px solid rgba(255,255,255,0.07);
+            background: #f8fafc;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
         .gt-search input {
             flex: 1;
@@ -696,20 +719,20 @@
             font-family: 'Outfit', sans-serif;
             font-size: 13px;
             font-weight: 500;
-            color: rgba(255,255,255,0.9);
+            color: #1e293b;
         }
         .gt-search input::placeholder {
-            color: rgba(255,255,255,0.35);
+            color: #94a3b8;
         }
         .gt-search .gt-search-icon {
-            color: rgba(255,255,255,0.35);
+            color: #94a3b8;
             font-size: 16px;
             flex-shrink: 0;
         }
         .gt-search-clear {
             background: none;
             border: none;
-            color: rgba(255,255,255,0.35);
+            color: #94a3b8;
             font-size: 16px;
             cursor: pointer;
             padding: 0;
@@ -717,7 +740,7 @@
             flex-shrink: 0;
             transition: color 150ms ease;
         }
-        .gt-search-clear:hover { color: rgba(255,255,255,0.7); }
+        .gt-search-clear:hover { color: #64748b; }
         /* Mobile search */
         .gt-mobile-search {
             display: flex;
@@ -752,7 +775,7 @@
             text-align: center;
             font-family: 'Outfit', sans-serif;
             font-size: 12px;
-            color: rgba(255,255,255,0.35);
+            color: #94a3b8;
         }
         .gt-no-results-mobile {
             padding: 16px 12px;
@@ -953,18 +976,18 @@
 
                     {{-- Translate Button (Desktop) --}}
                     <div class="relative" id="gtNavWrap">
-                        <button class="gt-nav-btn" id="gtNavBtn" aria-label="Pilih Bahasa" type="button">
+                        <button class="gt-nav-btn notranslate" id="gtNavBtn" aria-label="Pilih Bahasa" type="button">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
                             </svg>
-                            <span class="gt-nav-flag" id="gtNavFlag">🇮🇩</span>
+                            <img src="https://flagcdn.com/w40/id.png" alt="Indonesia" class="gt-nav-flag-img" id="gtNavFlag">
                             <span class="gt-nav-chevron material-symbols-outlined">expand_more</span>
                         </button>
                         <div class="gt-dropdown" id="gtDropdown">
-                            <div class="gt-dropdown-header">Pilih Bahasa</div>
+                            <div class="gt-dropdown-header notranslate">Pilih Bahasa</div>
                             <div class="gt-search">
                                 <span class="material-symbols-outlined gt-search-icon">search</span>
-                                <input type="text" id="gtSearchInput" placeholder="Cari bahasa..." autocomplete="off">
+                                <input type="text" id="gtSearchInput" placeholder="Cari bahasa..." autocomplete="off" class="notranslate">
                                 <button class="gt-search-clear" id="gtSearchClear" type="button" style="display:none;">
                                     <span class="material-symbols-outlined" style="font-size:14px;">close</span>
                                 </button>
@@ -1032,9 +1055,9 @@
 
                 {{-- Mobile Translate --}}
                 <div class="border-t border-outline-variant/30 mt-2 pt-2">
-                    <button class="gt-mobile-row" id="gtMobileToggle" type="button">
+                    <button class="gt-mobile-row notranslate" id="gtMobileToggle" type="button">
                         <span class="material-symbols-outlined text-xl">translate</span>
-                        <span>Terjemahkan &nbsp;<span id="gtMobileFlag">🇮🇩</span> <span id="gtMobileName">Indonesia</span></span>
+                        <span class="notranslate inline-flex items-center gap-2">Terjemahkan &nbsp;<img src="https://flagcdn.com/w40/id.png" alt="Indonesia" class="gt-nav-flag-img" id="gtMobileFlag"> <span id="gtMobileName">Indonesia</span></span>
                         <span class="material-symbols-outlined text-base ml-auto" id="gtMobileChevron">expand_more</span>
                     </button>
                     <div class="gt-mobile-sub" id="gtMobileSub">
@@ -1229,115 +1252,115 @@
     <script>
         // ─── Language list ──────────────────────────────────────────────────────
         const GT_LANGUAGES = [
-            { code: 'id', name: 'Indonesia', flag: '🇮🇩' },
-            { code: 'en', name: 'Inggris', flag: '🇺🇸' },
-            { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
-            { code: 'sq', name: 'Albania', flag: '🇦🇱' },
-            { code: 'am', name: 'Amharik', flag: '🇪🇹' },
-            { code: 'ar', name: 'Arab', flag: '🇸🇦' },
-            { code: 'hy', name: 'Armenia', flag: '🇦🇲' },
-            { code: 'az', name: 'Azerbaijan', flag: '🇦🇿' },
-            { code: 'eu', name: 'Basque', flag: '🏴' },
-            { code: 'be', name: 'Belarusia', flag: '🇧🇾' },
-            { code: 'bn', name: 'Bengali', flag: '🇧🇩' },
-            { code: 'bs', name: 'Bosnia', flag: '🇧🇦' },
-            { code: 'bg', name: 'Bulgaria', flag: '🇧🇬' },
-            { code: 'ca', name: 'Katala', flag: '🏴' },
-            { code: 'ceb', name: 'Cebuano', flag: '🇵🇭' },
-            { code: 'zh-CN', name: 'Mandarin (Sederhana)', flag: '🇨🇳' },
-            { code: 'zh-TW', name: 'Mandarin (Tradisional)', flag: '🇹🇼' },
-            { code: 'co', name: 'Korsika', flag: '🇫🇷' },
-            { code: 'hr', name: 'Kroasia', flag: '🇭🇷' },
-            { code: 'cs', name: 'Ceko', flag: '🇨🇿' },
-            { code: 'da', name: 'Denmark', flag: '🇩🇰' },
-            { code: 'nl', name: 'Belanda', flag: '🇳🇱' },
-            { code: 'eo', name: 'Esperanto', flag: '🌍' },
-            { code: 'et', name: 'Estonia', flag: '🇪🇪' },
-            { code: 'fi', name: 'Finlandia', flag: '🇫🇮' },
-            { code: 'fr', name: 'Perancis', flag: '🇫🇷' },
-            { code: 'fy', name: 'Frisia', flag: '🇳🇱' },
-            { code: 'gl', name: 'Galisia', flag: '🇪🇸' },
-            { code: 'ka', name: 'Georgia', flag: '🇬🇪' },
-            { code: 'de', name: 'Jerman', flag: '🇩🇪' },
-            { code: 'el', name: 'Yunani', flag: '🇬🇷' },
-            { code: 'gu', name: 'Gujarat', flag: '🇮🇳' },
-            { code: 'ht', name: 'Kreol Haiti', flag: '🇭🇹' },
-            { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
-            { code: 'haw', name: 'Hawaii', flag: '🇺🇸' },
-            { code: 'he', name: 'Ibrani', flag: '🇮🇱' },
-            { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
-            { code: 'hmn', name: 'Hmong', flag: '🌏' },
-            { code: 'hu', name: 'Hungaria', flag: '🇭🇺' },
-            { code: 'is', name: 'Islandia', flag: '🇮🇸' },
-            { code: 'ig', name: 'Igbo', flag: '🇳🇬' },
-            { code: 'ga', name: 'Irlandia', flag: '🇮🇪' },
-            { code: 'it', name: 'Italia', flag: '🇮🇹' },
-            { code: 'ja', name: 'Jepang', flag: '🇯🇵' },
-            { code: 'jv', name: 'Jawa', flag: '🇮🇩' },
-            { code: 'kn', name: 'Kannada', flag: '🇮🇳' },
-            { code: 'kk', name: 'Kazakhstan', flag: '🇰🇿' },
-            { code: 'km', name: 'Khmer', flag: '🇰🇭' },
-            { code: 'rw', name: 'Kinyarwanda', flag: '🇷🇼' },
-            { code: 'ko', name: 'Korea', flag: '🇰🇷' },
-            { code: 'ku', name: 'Kurdi', flag: '🌍' },
-            { code: 'ky', name: 'Kirgiz', flag: '🇰🇬' },
-            { code: 'lo', name: 'Laos', flag: '🇱🇦' },
-            { code: 'la', name: 'Latin', flag: '🏛️' },
-            { code: 'lv', name: 'Latvia', flag: '🇱🇻' },
-            { code: 'lt', name: 'Lithuania', flag: '🇱🇹' },
-            { code: 'lb', name: 'Luksemburg', flag: '🇱🇺' },
-            { code: 'mk', name: 'Makedonia', flag: '🇲🇰' },
-            { code: 'mg', name: 'Malagasi', flag: '🇲🇬' },
-            { code: 'ms', name: 'Melayu', flag: '🇲🇾' },
-            { code: 'ml', name: 'Malayalam', flag: '🇮🇳' },
-            { code: 'mt', name: 'Malta', flag: '🇲🇹' },
-            { code: 'mi', name: 'Maori', flag: '🇳🇿' },
-            { code: 'mr', name: 'Marathi', flag: '🇮🇳' },
-            { code: 'mn', name: 'Mongolia', flag: '🇲🇳' },
-            { code: 'my', name: 'Myanmar', flag: '🇲🇲' },
-            { code: 'ne', name: 'Nepal', flag: '🇳🇵' },
-            { code: 'no', name: 'Norwegia', flag: '🇳🇴' },
-            { code: 'ny', name: 'Chichewa', flag: '🇲🇼' },
-            { code: 'or', name: 'Odia', flag: '🇮🇳' },
-            { code: 'ps', name: 'Pashto', flag: '🇦🇫' },
-            { code: 'fa', name: 'Persia', flag: '🇮🇷' },
-            { code: 'pl', name: 'Polandia', flag: '🇵🇱' },
-            { code: 'pt', name: 'Portugis', flag: '🇧🇷' },
-            { code: 'pa', name: 'Punjabi', flag: '🇮🇳' },
-            { code: 'ro', name: 'Rumania', flag: '🇷🇴' },
-            { code: 'ru', name: 'Rusia', flag: '🇷🇺' },
-            { code: 'sm', name: 'Samoa', flag: '🇼🇸' },
-            { code: 'gd', name: 'Gaelik Skotlandia', flag: '🏴' },
-            { code: 'sr', name: 'Serbia', flag: '🇷🇸' },
-            { code: 'st', name: 'Sesotho', flag: '🇱🇸' },
-            { code: 'sn', name: 'Shona', flag: '🇿🇼' },
-            { code: 'sd', name: 'Sindhi', flag: '🇵🇰' },
-            { code: 'si', name: 'Sinhala', flag: '🇱🇰' },
-            { code: 'sk', name: 'Slovak', flag: '🇸🇰' },
-            { code: 'sl', name: 'Slovenia', flag: '🇸🇮' },
-            { code: 'so', name: 'Somali', flag: '🇸🇴' },
-            { code: 'es', name: 'Spanyol', flag: '🇪🇸' },
-            { code: 'su', name: 'Sunda', flag: '🇮🇩' },
-            { code: 'sw', name: 'Swahili', flag: '🌍' },
-            { code: 'sv', name: 'Swedia', flag: '🇸🇪' },
-            { code: 'tl', name: 'Filipino', flag: '🇵🇭' },
-            { code: 'tg', name: 'Tajik', flag: '🇹🇯' },
-            { code: 'ta', name: 'Tamil', flag: '🇮🇳' },
-            { code: 'tt', name: 'Tatar', flag: '🇷🇺' },
-            { code: 'te', name: 'Telugu', flag: '🇮🇳' },
-            { code: 'th', name: 'Thailand', flag: '🇹🇭' },
-            { code: 'tr', name: 'Turki', flag: '🇹🇷' },
-            { code: 'tk', name: 'Turkmen', flag: '🇹🇲' },
-            { code: 'uk', name: 'Ukraina', flag: '🇺🇦' },
-            { code: 'ur', name: 'Urdu', flag: '🇵🇰' },
-            { code: 'ug', name: 'Uighur', flag: '🇨🇳' },
-            { code: 'uz', name: 'Uzbek', flag: '🇺🇿' },
-            { code: 'vi', name: 'Vietnam', flag: '🇻🇳' },
-            { code: 'cy', name: 'Wales', flag: '🏴' },
-            { code: 'xh', name: 'Xhosa', flag: '🇿🇦' },
-            { code: 'yi', name: 'Yiddish', flag: '🌍' },
-            { code: 'yo', name: 'Yoruba', flag: '🇳🇬' },
-            { code: 'zu', name: 'Zulu', flag: '🇿🇦' },
+            { code: 'id', name: 'Indonesia', flagCode: 'id' },
+            { code: 'en', name: 'Inggris', flagCode: 'us' },
+            { code: 'af', name: 'Afrikaans', flagCode: 'za' },
+            { code: 'sq', name: 'Albania', flagCode: 'al' },
+            { code: 'am', name: 'Amharik', flagCode: 'et' },
+            { code: 'ar', name: 'Arab', flagCode: 'sa' },
+            { code: 'hy', name: 'Armenia', flagCode: 'am' },
+            { code: 'az', name: 'Azerbaijan', flagCode: 'az' },
+            { code: 'eu', name: 'Basque', flagCode: 'es' },
+            { code: 'be', name: 'Belarusia', flagCode: 'by' },
+            { code: 'bn', name: 'Bengali', flagCode: 'bd' },
+            { code: 'bs', name: 'Bosnia', flagCode: 'ba' },
+            { code: 'bg', name: 'Bulgaria', flagCode: 'bg' },
+            { code: 'ca', name: 'Katala', flagCode: 'es' },
+            { code: 'ceb', name: 'Cebuano', flagCode: 'ph' },
+            { code: 'zh-CN', name: 'Mandarin (Sederhana)', flagCode: 'cn' },
+            { code: 'zh-TW', name: 'Mandarin (Tradisional)', flagCode: 'tw' },
+            { code: 'co', name: 'Korsika', flagCode: 'fr' },
+            { code: 'hr', name: 'Kroasia', flagCode: 'hr' },
+            { code: 'cs', name: 'Ceko', flagCode: 'cz' },
+            { code: 'da', name: 'Denmark', flagCode: 'dk' },
+            { code: 'nl', name: 'Belanda', flagCode: 'nl' },
+            { code: 'eo', name: 'Esperanto', flagCode: 'un' },
+            { code: 'et', name: 'Estonia', flagCode: 'ee' },
+            { code: 'fi', name: 'Finlandia', flagCode: 'fi' },
+            { code: 'fr', name: 'Perancis', flagCode: 'fr' },
+            { code: 'fy', name: 'Frisia', flagCode: 'nl' },
+            { code: 'gl', name: 'Galisia', flagCode: 'es' },
+            { code: 'ka', name: 'Georgia', flagCode: 'ge' },
+            { code: 'de', name: 'Jerman', flagCode: 'de' },
+            { code: 'el', name: 'Yunani', flagCode: 'gr' },
+            { code: 'gu', name: 'Gujarat', flagCode: 'in' },
+            { code: 'ht', name: 'Kreol Haiti', flagCode: 'ht' },
+            { code: 'ha', name: 'Hausa', flagCode: 'ng' },
+            { code: 'haw', name: 'Hawaii', flagCode: 'us' },
+            { code: 'he', name: 'Ibrani', flagCode: 'il' },
+            { code: 'hi', name: 'Hindi', flagCode: 'in' },
+            { code: 'hmn', name: 'Hmong', flagCode: 'la' },
+            { code: 'hu', name: 'Hungaria', flagCode: 'hu' },
+            { code: 'is', name: 'Islandia', flagCode: 'is' },
+            { code: 'ig', name: 'Igbo', flagCode: 'ng' },
+            { code: 'ga', name: 'Irlandia', flagCode: 'ie' },
+            { code: 'it', name: 'Italia', flagCode: 'it' },
+            { code: 'ja', name: 'Jepang', flagCode: 'jp' },
+            { code: 'jv', name: 'Jawa', flagCode: 'id' },
+            { code: 'kn', name: 'Kannada', flagCode: 'in' },
+            { code: 'kk', name: 'Kazakhstan', flagCode: 'kz' },
+            { code: 'km', name: 'Khmer', flagCode: 'kh' },
+            { code: 'rw', name: 'Kinyarwanda', flagCode: 'rw' },
+            { code: 'ko', name: 'Korea', flagCode: 'kr' },
+            { code: 'ku', name: 'Kurdi', flagCode: 'iq' },
+            { code: 'ky', name: 'Kirgiz', flagCode: 'kg' },
+            { code: 'lo', name: 'Laos', flagCode: 'la' },
+            { code: 'la', name: 'Latin', flagCode: 'va' },
+            { code: 'lv', name: 'Latvia', flagCode: 'lv' },
+            { code: 'lt', name: 'Lithuania', flagCode: 'lt' },
+            { code: 'lb', name: 'Luksemburg', flagCode: 'lu' },
+            { code: 'mk', name: 'Makedonia', flagCode: 'mk' },
+            { code: 'mg', name: 'Malagasi', flagCode: 'mg' },
+            { code: 'ms', name: 'Melayu', flagCode: 'my' },
+            { code: 'ml', name: 'Malayalam', flagCode: 'in' },
+            { code: 'mt', name: 'Malta', flagCode: 'mt' },
+            { code: 'mi', name: 'Maori', flagCode: 'nz' },
+            { code: 'mr', name: 'Marathi', flagCode: 'in' },
+            { code: 'mn', name: 'Mongolia', flagCode: 'mn' },
+            { code: 'my', name: 'Myanmar', flagCode: 'mm' },
+            { code: 'ne', name: 'Nepal', flagCode: 'np' },
+            { code: 'no', name: 'Norwegia', flagCode: 'no' },
+            { code: 'ny', name: 'Chichewa', flagCode: 'mw' },
+            { code: 'or', name: 'Odia', flagCode: 'in' },
+            { code: 'ps', name: 'Pashto', flagCode: 'af' },
+            { code: 'fa', name: 'Persia', flagCode: 'ir' },
+            { code: 'pl', name: 'Polandia', flagCode: 'pl' },
+            { code: 'pt', name: 'Portugis', flagCode: 'br' },
+            { code: 'pa', name: 'Punjabi', flagCode: 'in' },
+            { code: 'ro', name: 'Rumania', flagCode: 'ro' },
+            { code: 'ru', name: 'Rusia', flagCode: 'ru' },
+            { code: 'sm', name: 'Samoa', flagCode: 'ws' },
+            { code: 'gd', name: 'Gaelik Skotlandia', flagCode: 'gb' },
+            { code: 'sr', name: 'Serbia', flagCode: 'rs' },
+            { code: 'st', name: 'Sesotho', flagCode: 'ls' },
+            { code: 'sn', name: 'Shona', flagCode: 'zw' },
+            { code: 'sd', name: 'Sindhi', flagCode: 'pk' },
+            { code: 'si', name: 'Sinhala', flagCode: 'lk' },
+            { code: 'sk', name: 'Slovak', flagCode: 'sk' },
+            { code: 'sl', name: 'Slovenia', flagCode: 'si' },
+            { code: 'so', name: 'Somali', flagCode: 'so' },
+            { code: 'es', name: 'Spanyol', flagCode: 'es' },
+            { code: 'su', name: 'Sunda', flagCode: 'id' },
+            { code: 'sw', name: 'Swahili', flagCode: 'tz' },
+            { code: 'sv', name: 'Swedia', flagCode: 'se' },
+            { code: 'tl', name: 'Filipino', flagCode: 'ph' },
+            { code: 'tg', name: 'Tajik', flagCode: 'tj' },
+            { code: 'ta', name: 'Tamil', flagCode: 'in' },
+            { code: 'tt', name: 'Tatar', flagCode: 'ru' },
+            { code: 'te', name: 'Telugu', flagCode: 'in' },
+            { code: 'th', name: 'Thailand', flagCode: 'th' },
+            { code: 'tr', name: 'Turki', flagCode: 'tr' },
+            { code: 'tk', name: 'Turkmen', flagCode: 'tm' },
+            { code: 'uk', name: 'Ukraina', flagCode: 'ua' },
+            { code: 'ur', name: 'Urdu', flagCode: 'pk' },
+            { code: 'ug', name: 'Uighur', flagCode: 'cn' },
+            { code: 'uz', name: 'Uzbek', flagCode: 'uz' },
+            { code: 'vi', name: 'Vietnam', flagCode: 'vn' },
+            { code: 'cy', name: 'Wales', flagCode: 'gb' },
+            { code: 'xh', name: 'Xhosa', flagCode: 'za' },
+            { code: 'yi', name: 'Yiddish', flagCode: 'il' },
+            { code: 'yo', name: 'Yoruba', flagCode: 'ng' },
+            { code: 'zu', name: 'Zulu', flagCode: 'za' },
         ];
 
         let gtCurrentCode = 'id';
@@ -1367,9 +1390,24 @@
             }
             filtered.forEach(lang => {
                 const btn = document.createElement('button');
+                btn.type = 'button';
                 btn.className = 'gt-lang-item' + (lang.code === gtCurrentCode ? ' active' : '');
                 btn.dataset.code = lang.code;
-                btn.innerHTML = `<span class="gt-flag">${lang.flag}</span>${lang.name}`;
+                
+                // Create flag image
+                const flagImg = document.createElement('img');
+                flagImg.className = 'gt-flag-img';
+                flagImg.src = `https://flagcdn.com/w40/${lang.flagCode}.png`;
+                flagImg.alt = lang.name;
+                flagImg.loading = 'lazy';
+                
+                // Create name span
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'notranslate';
+                nameSpan.innerText = lang.name;
+                
+                btn.appendChild(flagImg);
+                btn.appendChild(nameSpan);
                 btn.addEventListener('click', () => gtSelectLang(lang));
                 list.appendChild(btn);
             });
@@ -1428,7 +1466,21 @@
                 btn.type = 'button';
                 btn.className = 'gt-mobile-lang' + (lang.code === gtCurrentCode ? ' active' : '');
                 btn.dataset.code = lang.code;
-                btn.innerHTML = `<span style="font-size:15px;">${lang.flag}</span>${lang.name}`;
+                
+                // Create flag image
+                const flagImg = document.createElement('img');
+                flagImg.className = 'gt-flag-img';
+                flagImg.src = `https://flagcdn.com/w40/${lang.flagCode}.png`;
+                flagImg.alt = lang.name;
+                flagImg.loading = 'lazy';
+                
+                // Create name span
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'notranslate';
+                nameSpan.innerText = lang.name;
+                
+                btn.appendChild(flagImg);
+                btn.appendChild(nameSpan);
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     gtSelectLang(lang);
@@ -1440,12 +1492,19 @@
         // ─── Update all flag/name UI indicators ────────────────────────────────
         function gtUpdateIndicators() {
             const lang = GT_LANGUAGES.find(l => l.code === gtCurrentCode) || GT_LANGUAGES[0];
+            const flagUrl = `https://flagcdn.com/w40/${lang.flagCode}.png`;
             const navFlag = document.getElementById('gtNavFlag');
-            if (navFlag) navFlag.textContent = lang.flag;
+            if (navFlag) {
+                navFlag.src = flagUrl;
+                navFlag.alt = lang.name;
+            }
             const mFlag = document.getElementById('gtMobileFlag');
-            if (mFlag) mFlag.textContent = lang.flag;
+            if (mFlag) {
+                mFlag.src = flagUrl;
+                mFlag.alt = lang.name;
+            }
             const mName = document.getElementById('gtMobileName');
-            if (mName) mName.textContent = lang.name;
+            if (mName) mName.innerHTML = '<span class="notranslate">' + lang.name + '</span>';
         }
 
         // ─── Select a language ─────────────────────────────────────────────────
