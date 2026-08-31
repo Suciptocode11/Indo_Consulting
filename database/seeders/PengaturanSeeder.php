@@ -13,6 +13,7 @@ class PengaturanSeeder extends Seeder
         DB::table('pengaturan')->insert([
             'id'        => 1,
             'company'   => 'Indo Consulting',
+            'logo'      => 'settings/1TP3RF2I06qZiVqV8cl158F3QdPrh2JBUfb34VE6.png',
             'address'   => 'Jl. Ganetri IV No.4, Tonja, Kec. Denpasar Utara, Kota Denpasar, Bali 80237',
             'phone'     => '+62 878-653-09966',
             'email'     => 'partner@indoconsulting.id',

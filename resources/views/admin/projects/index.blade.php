@@ -15,7 +15,7 @@
         <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
     </form>
     <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">
-        <span class="material-symbols-outlined">add</span> Tambah Baru
+        <span class="material-symbols-outlined">add</span> Tambah Proyek
     </a>
 </div>
 

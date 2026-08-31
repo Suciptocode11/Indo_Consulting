@@ -23,5 +23,13 @@ class ViewServiceProvider extends ServiceProvider
                 'socialMedia'  => SocialMedia::orderBy('urutan')->get(),
             ]);
         });
+
+        // Share pending counters ke admin layout
+        View::composer('admin.layouts.app', function ($view) {
+            $view->with([
+                'pendingPendaftaranCount' => \App\Models\Pendaftaran::where('status', 'Pending')->count(),
+                'pendingPartnerCount'     => \App\Models\PartnerSubmission::where('status', 'Pending')->count(),
+            ]);
+        });
     }
 }

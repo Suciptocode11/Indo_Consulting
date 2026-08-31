@@ -70,4 +70,24 @@ class KategoriProjectController extends Controller
 
         return redirect()->route('admin.kategori-project.index')->with('success', 'Kategori berhasil dihapus.');
     }
+
+    public function quickStoreCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug'  => 'nullable|string|max:255',
+        ]);
+
+        if (empty($validated['slug'])) {
+            $validated['slug'] = Str::slug($validated['title']);
+        }
+
+        $kategori = KategoriProject::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'data'    => $kategori,
+            'message' => 'Kategori proyek berhasil ditambahkan.',
+        ]);
+    }
 }

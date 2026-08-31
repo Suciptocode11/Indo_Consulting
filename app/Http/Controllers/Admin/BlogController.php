@@ -143,4 +143,24 @@ class BlogController extends Controller
         $html = preg_replace('#javascript\s*:#is', '', $html);
         return $html;
     }
+
+    public function quickStoreCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug'  => 'nullable|string|max:255',
+        ]);
+
+        if (empty($validated['slug'])) {
+            $validated['slug'] = Str::slug($validated['title']);
+        }
+
+        $kategori = Kategori::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'data'    => $kategori,
+            'message' => 'Kategori berita berhasil ditambahkan.',
+        ]);
+    }
 }

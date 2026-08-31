@@ -15,7 +15,12 @@
         </div>
 
         <div class="form-group">
-            <label>Kategori</label>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label style="margin-bottom: 0;">Kategori</label>
+                <button type="button" class="btn-quick-add" onclick="openQuickCategoryModal('project', 'id_category')">
+                    <span class="material-symbols-outlined" style="font-size: 15px;">add_circle</span> Tambah Kategori Baru
+                </button>
+            </div>
             <select name="id_category">
                 <option value="">-- Pilih Kategori --</option>
                 @foreach($kategoris as $k)

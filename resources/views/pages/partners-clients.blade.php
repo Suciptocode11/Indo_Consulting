@@ -94,6 +94,57 @@
     </div>
 </section>
 
+{{-- CTA Daftar Partner --}}
+<section class="py-16 bg-surface">
+    <div class="max-w-5xl mx-auto px-responsive">
+        <div class="relative bg-primary rounded-2xl overflow-hidden">
+
+            {{-- Subtle decorative bg --}}
+            <div style="position:absolute;top:-80px;right:-80px;width:280px;height:280px;background:rgba(255,255,255,0.05);border-radius:9999px;pointer-events:none;"></div>
+            <div style="position:absolute;bottom:-50px;right:120px;width:180px;height:180px;background:rgba(255,255,255,0.03);border-radius:9999px;pointer-events:none;"></div>
+
+            <div class="relative flex flex-col md:flex-row items-center gap-0" style="padding: 2.5rem 3rem;">
+
+                {{-- Left: Text content --}}
+                <div style="flex:1; min-width:0;">
+                    {{-- Eyebrow badge --}}
+                    <div style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;margin-bottom:1rem;">
+                        <span class="material-symbols-outlined" style="font-size:13px;line-height:1;">handshake</span>
+                        Kemitraan Strategis
+                    </div>
+                    {{-- Heading --}}
+                    <h2 style="font-family:'Outfit',sans-serif;font-weight:800;color:#ffffff;line-height:1.2;margin:0 0 0.6rem 0;font-size:clamp(1.6rem,2.5vw,2.2rem);">
+                        Ingin menjadi Partner kami?
+                    </h2>
+                    {{-- Subtitle --}}
+                    <p style="font-family:'Outfit',sans-serif;font-size:0.95rem;color:rgba(255,255,255,0.68);line-height:1.65;margin:0;">
+                        Bergabunglah bersama jaringan partner strategis Indo Consulting<br class="hidden lg:block"> dan berkembang bersama kami.
+                    </p>
+                </div>
+
+                {{-- Divider (desktop only) --}}
+                <div class="hidden md:block" style="width:1px;height:80px;background:rgba(255,255,255,0.12);margin:0 2.5rem;flex-shrink:0;"></div>
+
+                {{-- Right: CTA Button --}}
+                <div style="flex-shrink:0;">
+                    <a href="{{ route('partner.create') }}"
+                       style="display:inline-flex;align-items:center;gap:0.6rem;background:#ffffff;color:#bb0027;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.9rem;padding:0.85rem 1.75rem;border-radius:9999px;text-decoration:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:transform 250ms ease, box-shadow 250ms ease;"
+                       onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 28px rgba(0,0,0,0.25)'"
+                       onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 20px rgba(0,0,0,0.2)'"
+                       onmousedown="this.style.transform='scale(0.97)'"
+                       onmouseup="this.style.transform='scale(1.05)'">
+                        Daftar Sekarang
+                        <span class="material-symbols-outlined" style="font-size:18px;line-height:1;">arrow_forward</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 {{-- Testimonials Carousel --}}
 <section class="py-block-gap bg-surface-container-low">
     <div class="max-w-4xl mx-auto px-margin-x">

@@ -59,6 +59,10 @@ Route::get('/karir', [PageController::class, 'karir'])->name('karir');
 Route::get('/karir/daftar', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
 Route::post('/karir/daftar', [PendaftaranController::class, 'store'])->name('pendaftaran.store')->middleware('throttle:pendaftaran');
 
+// Partner & Client Registration
+Route::get('/daftar-partner', [\App\Http\Controllers\PartnerSubmissionController::class, 'create'])->name('partner.create');
+Route::post('/daftar-partner', [\App\Http\Controllers\PartnerSubmissionController::class, 'store'])->name('partner.store')->middleware('throttle:pendaftaran');
+
 // SEO
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
@@ -102,6 +106,8 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('keunggulan', KeunggulanController::class)->except(['show']);
     Route::resource('visi-misi', VisiMisiController::class)->except(['show']);
     Route::resource('kategori-project', \App\Http\Controllers\Admin\KategoriProjectController::class)->except(['show']);
+    Route::post('/kategori-project/quick-store', [\App\Http\Controllers\Admin\KategoriProjectController::class, 'quickStoreCategory'])->name('kategori-project.quick-store');
+    Route::post('/kategori-blog/quick-store', [\App\Http\Controllers\Admin\BlogController::class, 'quickStoreCategory'])->name('kategori-blog.quick-store');
 
     // Upload (Summernote image)
     Route::post('/upload-image', [UploadController::class, 'uploadImage'])->middleware('throttle:upload');
@@ -133,4 +139,11 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/pendaftaran/{pendaftaran}/approve', [AdminPendaftaranController::class, 'approve'])->name('pendaftaran.approve');
     Route::post('/pendaftaran/{pendaftaran}/reject', [AdminPendaftaranController::class, 'reject'])->name('pendaftaran.reject');
     Route::delete('/pendaftaran/{pendaftaran}', [AdminPendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
+
+    // Partner Submissions
+    Route::get('/partner-submissions', [\App\Http\Controllers\Admin\PartnerSubmissionController::class, 'index'])->name('partner-submissions.index');
+    Route::get('/partner-submissions/{submission}', [\App\Http\Controllers\Admin\PartnerSubmissionController::class, 'show'])->name('partner-submissions.show');
+    Route::post('/partner-submissions/{submission}/approve', [\App\Http\Controllers\Admin\PartnerSubmissionController::class, 'approve'])->name('partner-submissions.approve');
+    Route::post('/partner-submissions/{submission}/reject', [\App\Http\Controllers\Admin\PartnerSubmissionController::class, 'reject'])->name('partner-submissions.reject');
+    Route::delete('/partner-submissions/{submission}', [\App\Http\Controllers\Admin\PartnerSubmissionController::class, 'destroy'])->name('partner-submissions.destroy');
 });

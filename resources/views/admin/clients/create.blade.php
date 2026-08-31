@@ -15,7 +15,12 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label>Sektor/Kategori</label>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label style="margin-bottom: 0;">Sektor/Kategori</label>
+                    <button type="button" class="btn-quick-add" onclick="openQuickCategoryModal('sector', 'sector')">
+                        <span class="material-symbols-outlined" style="font-size: 15px;">add_circle</span> Tambah
+                    </button>
+                </div>
                 <select name="sector">
                     <option value="">-- Pilih Sektor --</option>
                     <option value="Pemerintahan" {{ old('sector') === 'Pemerintahan' ? 'selected' : '' }}>Pemerintahan</option>
