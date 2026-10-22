@@ -89,7 +89,7 @@
                     <h2 class="text-headline-sm font-outfit font-bold text-white">{{ $pageContent['cta_heading'] ?? 'Ingin hasil seperti ini?' }}</h2>
                     <p class="text-body-md text-white/70 mt-1">{{ $pageContent['cta_description'] ?? '' }}</p>
                 </div>
-                <a href="{{ route('kontak-kami') }}" class="bg-white text-primary hover:bg-white/90 inline-flex items-center gap-2 px-8 py-4 rounded-full text-label-md font-outfit font-semibold flex-shrink-0 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
+                <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="bg-white text-primary hover:bg-white/90 inline-flex items-center gap-2 px-8 py-4 rounded-full text-label-md font-outfit font-semibold flex-shrink-0 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                     Konsultasi Sekarang
                     <span class="material-symbols-outlined text-xl">arrow_forward</span>
                 </a>

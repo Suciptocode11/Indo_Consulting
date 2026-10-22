@@ -36,7 +36,7 @@
 
                 {{-- Action Buttons --}}
                 <div class="flex flex-col sm:flex-row gap-4 reveal pt-4">
-                    <a href="{{ route('kontak-kami') }}" class="btn-primary inline-flex items-center justify-center gap-2 px-10 py-5 rounded-xl sm:rounded-full text-lg sm:text-label-md font-outfit font-semibold text-center shadow-lg shadow-secondary/20 hover:shadow-secondary/30 transition-all">
+                    <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center justify-center gap-2 px-10 py-5 rounded-xl sm:rounded-full text-lg sm:text-label-md font-outfit font-semibold text-center shadow-lg shadow-secondary/20 hover:shadow-secondary/30 transition-all">
                         <span>{{ $pageContent['hero_btn_primary'] ?? 'Konsultasi Sekarang' }}</span>
                         <span class="material-symbols-outlined text-lg">arrow_forward</span>
                     </a>
@@ -430,7 +430,7 @@
                 <h2 class="text-headline-lg font-outfit font-bold text-white mb-5">{{ $pageContent['cta_heading'] ?? 'Siap untuk Bertumbuh Bersama Kami?' }}</h2>
                 <p class="text-body-lg text-white/65 max-w-xl mx-auto mb-10">Hubungi tim konsultan kami dan temukan solusi terbaik untuk bisnis Anda.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="{{ route('kontak-kami') }}" class="bg-white text-primary hover:bg-white/90 inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full text-label-md font-outfit font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
+                    <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="bg-white text-primary hover:bg-white/90 inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full text-label-md font-outfit font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                         Konsultasi Sekarang
                         <span class="material-symbols-outlined text-xl">arrow_forward</span>
                     </a>

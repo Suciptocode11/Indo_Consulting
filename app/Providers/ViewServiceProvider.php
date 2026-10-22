@@ -18,9 +18,15 @@ class ViewServiceProvider extends ServiceProvider
     {
         // Share data global ke SEMUA view
         View::composer('*', function ($view) {
+            $pengaturan = Pengaturan::first();
+            $waPhone = $pengaturan?->whatsapp_number ?? '6287865309966';
+            $waUrl = $pengaturan?->whatsapp_url ?? ('https://wa.me/' . $waPhone . '?text=' . rawurlencode('Halo Indo Consulting, saya ingin konsultasi.'));
+
             $view->with([
-                'pengaturan'   => Pengaturan::first(),
+                'pengaturan'   => $pengaturan,
                 'socialMedia'  => SocialMedia::orderBy('urutan')->get(),
+                'waPhone'      => $waPhone,
+                'waUrl'        => $waUrl,
             ]);
         });
 

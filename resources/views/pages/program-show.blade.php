@@ -56,7 +56,7 @@
                         <p class="text-body-md text-on-surface-variant">{{ $program->slug }}</p>
                     </div>
 
-                    <a href="{{ route('kontak-kami') }}" class="btn-primary w-full justify-center text-center px-6 py-3.5 rounded-xl text-label-md font-outfit font-semibold">
+                    <a href="{{ $pengaturan ? $pengaturan->whatsappUrl('Halo ' . ($pengaturan->company ?? 'Indo Consulting') . ', saya ingin konsultasi mengenai program ' . $program->title . '.') : $waUrl }}" target="_blank" rel="noopener noreferrer" class="btn-primary w-full justify-center text-center px-6 py-3.5 rounded-xl text-label-md font-outfit font-semibold">
                         Konsultasi Sekarang
                     </a>
                 </div>
@@ -97,7 +97,7 @@
                     <h2 class="text-headline-sm font-outfit font-bold text-white">Butuh konsultasi program?</h2>
                     <p class="text-body-md text-white/65 mt-1">Tim ahli kami siap membantu menentukan solusi yang tepat.</p>
                 </div>
-                <a href="{{ route('kontak-kami') }}" class="bg-white text-primary hover:bg-white/90 inline-flex items-center gap-2 px-8 py-4 rounded-full text-label-md font-outfit font-semibold flex-shrink-0 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
+                <a href="{{ $pengaturan ? $pengaturan->whatsappUrl('Halo ' . ($pengaturan->company ?? 'Indo Consulting') . ', saya ingin konsultasi mengenai program ' . $program->title . '.') : $waUrl }}" target="_blank" rel="noopener noreferrer" class="bg-white text-primary hover:bg-white/90 inline-flex items-center gap-2 px-8 py-4 rounded-full text-label-md font-outfit font-semibold flex-shrink-0 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                     Hubungi Kami
                     <span class="material-symbols-outlined text-xl">arrow_forward</span>
                 </a>

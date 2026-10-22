@@ -1001,7 +1001,8 @@
                     </div>
 
                     {{-- CTA Button --}}
-                    <a href="{{ route('kontak-kami') }}"
+                    <a href="{{ $waUrl }}"
+                       target="_blank" rel="noopener noreferrer"
                        class="btn-primary inline-block px-6 py-2.5 rounded-full text-label-md font-outfit font-semibold shadow-sm">
                         Konsultasi Sekarang
                     </a>
@@ -1054,7 +1055,7 @@
                 </a>
 
                 <div class="pt-3 border-t border-outline-variant/30 mt-2">
-                    <a href="{{ route('kontak-kami') }}" class="btn-primary block text-center px-6 py-3 rounded-lg text-label-md font-outfit font-semibold">
+                    <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="btn-primary block text-center px-6 py-3 rounded-lg text-label-md font-outfit font-semibold">
                         Konsultasi Sekarang
                     </a>
                 </div>
@@ -1102,8 +1103,14 @@
                     </p>
                     <div class="flex items-center gap-3">
                         @foreach($socialMedia as $sm)
-                            @if($sm->url)
-                                <a href="{{ $sm->url }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors duration-200" aria-label="{{ $sm->label }}">
+                            @php
+                                $smUrl = $sm->url;
+                                if ($sm->platform === 'whatsapp' && empty($smUrl)) {
+                                    $smUrl = $waUrl;
+                                }
+                            @endphp
+                            @if($smUrl)
+                                <a href="{{ $smUrl }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors duration-200" aria-label="{{ $sm->label }}">
                                     @if($sm->platform === 'instagram')
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                                     @elseif($sm->platform === 'youtube')
@@ -1257,7 +1264,7 @@
         </div>
         <div style="padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
             {{-- WhatsApp --}}
-            <a href="https://wa.me/{{ $waPhone }}?text=Halo%20{{ urlencode($pengaturan->company ?? 'Indo Consulting') }}%2C%20saya%20ingin%20konsultasi."
+            <a href="{{ $waUrl }}"
                target="_blank" rel="noopener noreferrer"
                onclick="event.stopPropagation();"
                style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem; border-radius:0.75rem; background:#f0fdf4; text-decoration:none; transition:background 200ms;">

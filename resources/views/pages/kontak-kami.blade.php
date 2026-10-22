@@ -68,8 +68,14 @@
                     <p class="text-label-md font-outfit font-semibold text-on-surface-variant italic tracking-normal mb-4">Ikuti Kami</p>
                     <div class="flex gap-3">
                         @foreach($socialMedia as $sm)
-                            @if($sm->url)
-                                <a href="{{ $sm->url }}" target="_blank" rel="noopener noreferrer" class="w-11 h-11 rounded-xl bg-surface-container border border-outline-variant/40 flex items-center justify-center text-on-surface-variant hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-200" aria-label="{{ $sm->label }}">
+                            @php
+                                $smUrl = $sm->url;
+                                if ($sm->platform === 'whatsapp' && empty($smUrl)) {
+                                    $smUrl = $waUrl;
+                                }
+                            @endphp
+                            @if($smUrl)
+                                <a href="{{ $smUrl }}" target="_blank" rel="noopener noreferrer" class="w-11 h-11 rounded-xl bg-surface-container border border-outline-variant/40 flex items-center justify-center text-on-surface-variant hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-200" aria-label="{{ $sm->label }}">
                                     @if($sm->platform === 'instagram')
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                                     @elseif($sm->platform === 'youtube')
