@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Pengaturan;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage;
+
 class PengaturanController extends Controller
 {
     public function edit()
@@ -32,21 +34,32 @@ class PengaturanController extends Controller
             'website'   => 'nullable|url|max:255',
             'map'       => 'nullable|string',
             'copyright' => 'nullable|string|max:255',
-            'logo'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'logo'      => 'nullable|file|mimes:jpeg,png,jpg,webp,svg|max:5120',
+        ], [
+            'logo.mimes' => 'Format logo harus berupa JPG, PNG, WebP, atau SVG.',
+            'logo.max'   => 'Ukuran file logo maksimal 5 MB.',
         ]);
 
-        $pengaturan = Pengaturan::first();
+        $pengaturan = Pengaturan::firstOrCreate([]);
 
+        // Hapus logo jika diminta
+        if ($request->boolean('remove_logo') || $request->input('remove_img_logo') == '1') {
+            if ($pengaturan->logo && Storage::disk('public')->exists($pengaturan->logo)) {
+                Storage::disk('public')->delete($pengaturan->logo);
+            }
+            $validated['logo'] = null;
+        }
+
+        // Upload logo baru jika ada
         if ($request->hasFile('logo')) {
-            // Hapus logo lama
-            if ($pengaturan->logo && \Storage::disk('public')->exists($pengaturan->logo)) {
-                \Storage::disk('public')->delete($pengaturan->logo);
+            if ($pengaturan->logo && Storage::disk('public')->exists($pengaturan->logo)) {
+                Storage::disk('public')->delete($pengaturan->logo);
             }
             $validated['logo'] = $request->file('logo')->store('settings', 'public');
         }
 
         $pengaturan->update($validated);
 
-        return redirect()->route('admin.pengaturan.edit')->with('success', 'Pengaturan berhasil disimpan.');
+        return redirect()->route('admin.pengaturan.edit')->with('success', 'Pengaturan dan logo perusahaan berhasil disimpan.');
     }
 }

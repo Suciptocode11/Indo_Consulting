@@ -565,7 +565,7 @@
     <aside class="sidebar" :class="{ open: sidebarOpen }">
         <div class="sidebar-header">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-brand-block" title="Kembali ke Dashboard">
-                @if(!empty($pengaturan?->logo))
+                @if(!empty($pengaturan?->logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($pengaturan->logo))
                     <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="{{ $pengaturan->company ?? 'Indo Consulting' }}" class="sidebar-logo-img">
                 @else
                     <img src="{{ asset('images/logo.png') }}" alt="Indo Consulting" class="sidebar-logo-img">

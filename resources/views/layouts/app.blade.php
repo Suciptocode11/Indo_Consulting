@@ -148,13 +148,11 @@
             clip-path: ellipse(100% 55% at 50% 100%);
         }
 
-        /* Active nav indicator - premium pill style */
+        /* Active nav indicator - clean modern pill */
         .nav-active {
-            color: #020220;
-            background-color: #e2e8f0;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
+            color: #bb0027 !important;
+            background-color: rgba(187, 0, 39, 0.08) !important;
+            font-weight: 600 !important;
         }
 
         /* Marquee for partners */
@@ -886,8 +884,10 @@
 
     {{-- PAGE LOADER --}}
     <div id="pageLoader" class="page-loader">
-        @if($pengaturan && $pengaturan->logo)
+        @if(!empty($pengaturan?->logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($pengaturan->logo))
             <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="{{ $pengaturan->company ?? 'Indo Consulting' }}" class="loader-logo">
+        @elseif(file_exists(public_path('images/logo.png')))
+            <img src="{{ asset('images/logo.png') }}" alt="{{ $pengaturan?->company ?? 'Indo Consulting' }}" class="loader-logo">
         @else
             <h2 style="font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 700; color: #020220;" class="loader-logo">{{ $pengaturan?->company ?? 'Indo Consulting' }}</h2>
         @endif
@@ -904,45 +904,47 @@
 
     {{-- NAVBAR --}}
     <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-surface/95 backdrop-blur-md border-b border-outline-variant/40 shadow-sm">
-        <div class="max-w-container mx-auto px-responsive">
-            <div class="flex justify-between items-center h-16 lg:h-18">
+        <div class="max-w-7xl 2xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+            <div class="flex justify-between items-center h-16 lg:h-18 gap-3 xl:gap-6">
 
                 {{-- Logo --}}
-                <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0">
-                    @if($pengaturan && $pengaturan->logo)
-                        <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="{{ $pengaturan->company ?? 'Indo Consulting' }}" class="h-14 w-auto object-contain">
+                <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0" title="{{ $pengaturan?->company ?? 'Indo Consulting' }}">
+                    @if(!empty($pengaturan?->logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($pengaturan->logo))
+                        <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="{{ $pengaturan->company ?? 'Indo Consulting' }}" class="h-10 sm:h-11 xl:h-11 w-auto object-contain">
+                    @elseif(file_exists(public_path('images/logo.png')))
+                        <img src="{{ asset('images/logo.png') }}" alt="{{ $pengaturan?->company ?? 'Indo Consulting' }}" class="h-10 sm:h-11 xl:h-11 w-auto object-contain">
                     @else
                         <span style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: #020220;">{{ $pengaturan?->company ?? 'Indo Consulting' }}</span>
                     @endif
                 </a>
 
                 {{-- Desktop Nav --}}
-                <div class="hidden lg:flex items-center gap-1 xl:gap-2">
+                <div class="hidden lg:flex items-center justify-center gap-1 lg:gap-1.5 xl:gap-2.5 2xl:gap-3 flex-shrink-0">
                     <a href="{{ route('home') }}"
-                        class="text-sm xl:text-label-md font-outfit font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container px-2.5 xl:px-3 py-2 rounded-lg transition-all duration-200 {{ request()->routeIs('home') ? 'nav-active' : '' }}">
+                        class="text-[13.5px] xl:text-[14.5px] font-outfit font-medium hover:font-semibold text-on-surface-variant hover:text-primary hover:bg-slate-100/70 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('home') ? 'nav-active' : '' }}">
                         Home
                     </a>
                     <a href="{{ route('program') }}"
-                        class="text-sm xl:text-label-md font-outfit font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container px-2.5 xl:px-3 py-2 rounded-lg transition-all duration-200 {{ request()->routeIs('program') ? 'nav-active' : '' }}">
+                        class="text-[13.5px] xl:text-[14.5px] font-outfit font-medium hover:font-semibold text-on-surface-variant hover:text-primary hover:bg-slate-100/70 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('program') ? 'nav-active' : '' }}">
                         Program
                     </a>
                     <a href="{{ route('portfolio') }}"
-                        class="text-sm xl:text-label-md font-outfit font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container px-2.5 xl:px-3 py-2 rounded-lg transition-all duration-200 {{ request()->routeIs('portfolio') ? 'nav-active' : '' }}">
+                        class="text-[13.5px] xl:text-[14.5px] font-outfit font-medium hover:font-semibold text-on-surface-variant hover:text-primary hover:bg-slate-100/70 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('portfolio') ? 'nav-active' : '' }}">
                         Portfolio
                     </a>
                     <a href="{{ route('partners-clients') }}"
-                        class="text-sm xl:text-label-md font-outfit font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container px-2.5 xl:px-3 py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('partners-clients') ? 'nav-active' : '' }}">
+                        class="text-[13.5px] xl:text-[14.5px] font-outfit font-medium hover:font-semibold text-on-surface-variant hover:text-primary hover:bg-slate-100/70 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('partners-clients') ? 'nav-active' : '' }}">
                         Partners &amp; Clients
                     </a>
                     <a href="{{ route('our-expert') }}"
-                        class="text-sm xl:text-label-md font-outfit font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container px-2.5 xl:px-3 py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('our-expert') ? 'nav-active' : '' }}">
+                        class="text-[13.5px] xl:text-[14.5px] font-outfit font-medium hover:font-semibold text-on-surface-variant hover:text-primary hover:bg-slate-100/70 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('our-expert') ? 'nav-active' : '' }}">
                         Our Expert
                     </a>
 
                     {{-- INFO DROPDOWN --}}
                     <div class="relative dropdown-trigger">
                         <button
-                            class="flex items-center gap-1 text-sm xl:text-label-md font-outfit font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container px-2.5 xl:px-3 py-2 rounded-lg transition-all duration-200 {{ request()->routeIs('tentang-kami','news-events','gallery') ? 'nav-active' : '' }}"
+                            class="flex items-center gap-1 text-[13.5px] xl:text-[14.5px] font-outfit font-medium hover:font-semibold text-on-surface-variant hover:text-primary hover:bg-slate-100/70 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('tentang-kami','news-events','gallery') ? 'nav-active' : '' }}"
                             aria-haspopup="true"
                             aria-expanded="false"
                             id="info-dropdown-btn"
@@ -970,16 +972,16 @@
                     </div>
 
                     <a href="{{ route('kontak-kami') }}"
-                        class="text-sm xl:text-label-md font-outfit font-semibold text-on-surface-variant hover:text-primary hover:bg-surface-container px-2.5 xl:px-3 py-2 rounded-lg transition-all duration-200 {{ request()->routeIs('kontak-kami') ? 'nav-active' : '' }}">
+                        class="text-[13.5px] xl:text-[14.5px] font-outfit font-medium hover:font-semibold text-on-surface-variant hover:text-primary hover:bg-slate-100/70 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-lg transition-all duration-200 whitespace-nowrap {{ request()->routeIs('kontak-kami') ? 'nav-active' : '' }}">
                         Kontak
                     </a>
                 </div>
 
-                {{-- CTA --}}
-                <div class="hidden lg:flex items-center gap-3">
+                {{-- CTA & Language --}}
+                <div class="hidden lg:flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
 
                     {{-- Translate Button (Desktop) --}}
-                    <div class="relative" id="gtNavWrap">
+                    <div class="relative flex-shrink-0" id="gtNavWrap">
                         <button class="gt-nav-btn notranslate" id="gtNavBtn" aria-label="Pilih Bahasa" type="button">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
@@ -1003,7 +1005,7 @@
                     {{-- CTA Button --}}
                     <a href="{{ $waUrl }}"
                        target="_blank" rel="noopener noreferrer"
-                       class="btn-primary inline-block px-6 py-2.5 rounded-full text-label-md font-outfit font-semibold shadow-sm">
+                       class="btn-primary inline-flex items-center justify-center whitespace-nowrap px-4 xl:px-5 py-2 xl:py-2.5 rounded-full text-xs xl:text-sm font-outfit font-semibold shadow-sm tracking-wide flex-shrink-0">
                         Konsultasi Sekarang
                     </a>
                 </div>
@@ -1014,6 +1016,7 @@
                 </button>
             </div>
         </div>
+
 
         {{-- Mobile Menu --}}
         <div id="mobile-menu" class="lg:hidden bg-surface border-t border-outline-variant/40">
@@ -1093,8 +1096,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
                 {{-- Brand --}}
                 <div class="lg:col-span-2">
-                    @if($pengaturan && $pengaturan->logo)
+                    @if(!empty($pengaturan?->logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($pengaturan->logo))
                         <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="{{ $pengaturan->company ?? 'Indo Consulting' }}" class="h-12 object-contain brightness-0 invert mb-5">
+                    @elseif(file_exists(public_path('images/logo.png')))
+                        <img src="{{ asset('images/logo.png') }}" alt="{{ $pengaturan?->company ?? 'Indo Consulting' }}" class="h-12 object-contain brightness-0 invert mb-5">
                     @else
                         <h3 class="text-headline-sm font-outfit font-bold text-white mb-4">{{ $pengaturan?->company ?? 'Indo Consulting' }}</h3>
                     @endif

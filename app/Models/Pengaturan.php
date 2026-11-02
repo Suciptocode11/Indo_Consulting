@@ -17,7 +17,24 @@ class Pengaturan extends Model
         'website',
         'map',
         'copyright',
+        'logo',
     ];
+
+    public function getLogoUrlAttribute(): ?string
+    {
+        if (!empty($this->logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->logo)) {
+            return asset('storage/' . $this->logo);
+        }
+        if (file_exists(public_path('images/logo.png'))) {
+            return asset('images/logo.png');
+        }
+        return null;
+    }
+
+    public function getHasCustomLogoAttribute(): bool
+    {
+        return !empty($this->logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->logo);
+    }
 
     public function getWhatsappNumberAttribute(): string
     {
