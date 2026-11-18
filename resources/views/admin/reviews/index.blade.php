@@ -18,7 +18,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Nama</th>
                 <th>Pekerjaan</th>
                 <th>Bintang</th>
@@ -29,7 +29,7 @@
         <tbody>
             @forelse($reviews as $review)
             <tr>
-                <td>{{ $review->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $reviews->firstItem() + $loop->index }}</td>
                 <td><strong>{{ $review->nama }}</strong></td>
                 <td>{{ $review->pekerjaan ?? '-' }}</td>
                 <td>{{ $review->stars ? str_repeat('⭐', (int) $review->stars) : '-' }}</td>

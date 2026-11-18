@@ -8,8 +8,30 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
     @stack('styles')
+    <style>
+        .flatpickr-calendar {
+            font-family: 'Outfit', sans-serif !important;
+            border-radius: 12px !important;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15) !important;
+            border: 1px solid #e2e8f0 !important;
+            z-index: 999999 !important;
+        }
+        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+            background: #bb0027 !important;
+            border-color: #bb0027 !important;
+        }
+        .flatpickr-day:hover {
+            background: #f1f5f9 !important;
+        }
+        .flatpickr-day.selected:hover {
+            background: #990020 !important;
+        }
+    </style>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -436,24 +458,92 @@
             gap: 16px;
         }
 
-        /* Flash Messages */
+        /* Flash Messages - Toast Style */
         .flash-success {
-            background: #dcfce7;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
+            display: none; /* hidden by default, shown via JS toast */
         }
         .flash-error {
-            background: #fee2e2;
+            display: none;
+        }
+
+        /* Toast Notification */
+        #toast-container {
+            position: fixed;
+            top: 22px;
+            right: 22px;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 8px 24px -4px rgba(0,0,0,0.18), 0 2px 8px -2px rgba(0,0,0,0.1);
+            min-width: 280px;
+            max-width: 420px;
+            pointer-events: all;
+            animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        .toast-item.toast-hiding {
+            animation: toastOut 0.25s ease forwards;
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(60px) scale(0.92); }
+            to   { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(0) scale(1); }
+            to   { opacity: 0; transform: translateX(60px) scale(0.9); }
+        }
+        .toast-success {
+            background: #fff;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            border-left: 4px solid #22c55e;
+        }
+        .toast-error {
+            background: #fff;
             border: 1px solid #fecaca;
             color: #991b1b;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
+            border-left: 4px solid #ef4444;
+        }
+        .toast-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .toast-success .toast-icon { color: #22c55e; }
+        .toast-error   .toast-icon { color: #ef4444; }
+        .toast-body { flex: 1; line-height: 1.5; }
+        .toast-close {
+            background: none; border: none; cursor: pointer;
+            color: #94a3b8; font-size: 16px; padding: 0; line-height: 1;
+            flex-shrink: 0; margin-top: 2px;
+            transition: color .15s;
+        }
+        .toast-close:hover { color: #475569; }
+        .toast-progress {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 3px;
+            border-radius: 0 0 0 12px;
+            animation: toastProgress linear forwards;
+        }
+        .toast-success .toast-progress { background: #22c55e; }
+        .toast-error   .toast-progress { background: #ef4444; }
+        @keyframes toastProgress {
+            from { width: 100%; }
+            to   { width: 0%; }
         }
 
         /* Quick Modal */
@@ -564,19 +654,20 @@
     <!-- Sidebar -->
     <aside class="sidebar" :class="{ open: sidebarOpen }">
         <div class="sidebar-header">
-            <a href="{{ route('admin.dashboard') }}" class="sidebar-brand-block" title="Kembali ke Dashboard">
+            <a href="{{ auth()->user()->isFinance() ? route('admin.keuangan.index') : route('admin.dashboard') }}" class="sidebar-brand-block" title="{{ auth()->user()->isFinance() ? 'Keuangan' : 'Dashboard' }}">
                 @if(!empty($pengaturan?->logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($pengaturan->logo))
                     <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="{{ $pengaturan->company ?? 'Indo Consulting' }}" class="sidebar-logo-img">
                 @else
                     <img src="{{ asset('images/logo.png') }}" alt="Indo Consulting" class="sidebar-logo-img">
                 @endif
                 <div class="sidebar-header-meta">
-                    <span class="badge-role">Back Office</span>
+                    <span class="badge-role">{{ auth()->user()->role_label ?? 'Admin' }}</span>
                     <span class="portal-tag">Admin Panel</span>
                 </div>
             </a>
         </div>
         <nav class="sidebar-nav">
+            @if(!auth()->user()->isFinance())
             <!-- 1. Navigasi Utama -->
             <div class="nav-section">Utama</div>
             <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -585,7 +676,9 @@
                     <span>Dashboard</span>
                 </div>
             </a>
+            @endif
 
+            @if(auth()->user()->canAccessContent())
             <!-- 2. Data Masuk / Inbox -->
             <div class="nav-section">Data Masuk & Leads</div>
             <a href="{{ route('admin.pendaftaran.index') }}" class="nav-item {{ request()->routeIs('admin.pendaftaran.*') ? 'active' : '' }}">
@@ -618,7 +711,7 @@
             <a href="{{ route('admin.projects.index') }}" class="nav-item {{ request()->routeIs('admin.projects.*', 'admin.kategori-project.*') ? 'active' : '' }}">
                 <div class="nav-item-content">
                     <span class="material-symbols-outlined">work</span>
-                    <span>Portofolio Proyek</span>
+                    <span>Portofolio Galeri (Web)</span>
                 </div>
             </a>
             <a href="{{ route('admin.clients.index') }}" class="nav-item {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}">
@@ -681,9 +774,57 @@
                     <span>Tanya Jawab (FAQ)</span>
                 </div>
             </a>
+            @endif
 
-            <!-- 6. Pengaturan & Sistem -->
+            @if(auth()->user()->canAccessFinance())
+            <!-- 6. Manajemen Keuangan -->
+            <div class="nav-section">Manajemen Keuangan</div>
+            <a href="{{ route('admin.keuangan.index') }}" class="nav-item {{ request()->routeIs('admin.keuangan.index', 'admin.keuangan.create', 'admin.keuangan.show', 'admin.keuangan.edit') ? 'active' : '' }}">
+                <div class="nav-item-content">
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                    <span>Keuangan Umum</span>
+                </div>
+            </a>
+            <a href="{{ route('admin.keuangan.program.index') }}" class="nav-item {{ (request()->routeIs('admin.keuangan.program.*') || (request()->routeIs('admin.keuangan.kontrak.*', 'admin.keuangan.proyek.*') && !request()->routeIs('*.create'))) ? 'active' : '' }}">
+                <div class="nav-item-content">
+                    <span class="material-symbols-outlined">history_edu</span>
+                    <span>Keuangan Program</span>
+                </div>
+            </a>
+            @if(auth()->user()->isFinance())
+            <a href="{{ route('admin.services.index') }}" class="nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
+                <div class="nav-item-content">
+                    <span class="material-symbols-outlined">school</span>
+                    <span>Program Layanan</span>
+                </div>
+            </a>
+            @endif
+            <a href="{{ route('admin.keuangan.kategori.index') }}" class="nav-item {{ request()->routeIs('admin.keuangan.kategori.*') ? 'active' : '' }}">
+                <div class="nav-item-content">
+                    <span class="material-symbols-outlined">category</span>
+                    <span>Kategori Keuangan</span>
+                </div>
+            </a>
+            <button type="button" class="nav-item nav-btn-kontrak" onclick="openModalTambahKontrak()" style="width: calc(100% - 20px); text-align: left; background: rgba(187,0,39,0.12); border: 1px dashed rgba(187,0,39,0.35); cursor: pointer; color: #ffffff; font-family: inherit; font-size: 13px;">
+                <div class="nav-item-content">
+                    <span class="material-symbols-outlined" style="color: #f87171; font-size: 19px;">post_add</span>
+                    <span style="font-weight: 600;">Tambah Kontrak Klien</span>
+                </div>
+            </button>
+            @endif
+
+            @if(auth()->user()->isSuperAdmin() || auth()->user()->canAccessContent())
+            <!-- 7. Pengaturan & Sistem -->
             <div class="nav-section">Pengaturan & Sistem</div>
+            @if(auth()->user()->isSuperAdmin())
+            <a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <div class="nav-item-content">
+                    <span class="material-symbols-outlined">manage_accounts</span>
+                    <span>Kelola Akun</span>
+                </div>
+            </a>
+            @endif
+            @if(auth()->user()->canAccessContent())
             <a href="{{ route('admin.pengaturan.edit') }}" class="nav-item {{ request()->routeIs('admin.pengaturan.*') ? 'active' : '' }}">
                 <div class="nav-item-content">
                     <span class="material-symbols-outlined">settings</span>
@@ -696,6 +837,8 @@
                     <span>Media Sosial</span>
                 </div>
             </a>
+            @endif
+            @endif
             <a href="{{ route('admin.logout') }}" class="nav-item" style="margin-top: 10px; color: #fca5a5;" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <div class="nav-item-content">
                     <span class="material-symbols-outlined" style="color: #f87171;">logout</span>
@@ -723,7 +866,7 @@
                     <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
                     <span>Lihat Website</span>
                 </a>
-                <span class="topbar-user">Halo, <strong>{{ Auth::user()->nama ?? 'Admin' }}</strong></span>
+                <span class="topbar-user">Halo, <strong>{{ Auth::user()->nama ?? 'Admin' }}</strong> <span style="font-size:11px; padding:2px 7px; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:12px; margin-left:4px; font-weight:700; color:#475569;">{{ Auth::user()->role_label }}</span></span>
                 <button type="button" class="btn-logout" onclick="document.getElementById('logout-form').submit();" title="Keluar">
                     Keluar
                 </button>
@@ -732,17 +875,27 @@
 
         <!-- Content -->
         <div class="content">
-            @if(session('success'))
-                <div class="flash-success">{{ session('success') }}</div>
-            @endif
-
-            @if(session('error'))
-                <div class="flash-error">{{ session('error') }}</div>
-            @endif
-
             @yield('content')
         </div>
     </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('success', {{ json_encode(session('success')) }});
+        });
+    </script>
+    @endif
+    @if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            showToast('error', {{ json_encode(session('error')) }});
+        });
+    </script>
+    @endif
 
     <!-- Universal Quick Add Category Modal -->
     <div id="quickCategoryModal" class="quick-modal-backdrop" style="display: none;">
@@ -925,7 +1078,52 @@
                 submitBtn.textContent = 'Simpan';
             }
         }
+
+        window.initDatepickers = function(context) {
+            const root = context || document;
+            if (typeof flatpickr !== 'undefined') {
+                root.querySelectorAll('input[type="date"], input.datepicker').forEach(function(el) {
+                    if (el._flatpickr) return;
+                    flatpickr(el, {
+                        dateFormat: "Y-m-d",
+                        altInput: true,
+                        altFormat: "d/m/Y",
+                        altInputClass: (el.className || '') + ' form-control-date-custom',
+                        locale: "id",
+                        allowInput: true
+                    });
+                });
+            }
+        };
+        document.addEventListener('DOMContentLoaded', function() {
+            window.initDatepickers();
+        });
+
+        /* ── Toast Notification ───────────────────────────────── */
+        window.showToast = function(type, message, durationMs) {
+            durationMs = durationMs || 4500;
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const icon   = type === 'success' ? 'check_circle' : 'error';
+            const toast  = document.createElement('div');
+            toast.className = 'toast-item toast-' + type;
+            toast.innerHTML =
+                '<span class="material-symbols-outlined toast-icon">' + icon + '</span>' +
+                '<span class="toast-body">' + message + '</span>' +
+                '<button class="toast-close" onclick="this.closest(\'.toast-item\').remove()">' +
+                    '<span class="material-symbols-outlined" style="font-size:18px;">close</span>' +
+                '</button>' +
+                '<span class="toast-progress" style="animation-duration:' + durationMs + 'ms;"></span>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                toast.classList.add('toast-hiding');
+                setTimeout(function() { toast.remove(); }, 260);
+            }, durationMs);
+        };
     </script>
+
+    {{-- Floating Modal Tambah Kontrak Klien --}}
+    @include('admin.keuangan.partials.modal-tambah-kontrak')
 
     @yield('scripts')
     @stack('scripts')

@@ -18,7 +18,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Icon</th>
                 <th>Judul</th>
                 <th>Deskripsi</th>
@@ -30,7 +30,7 @@
         <tbody>
             @forelse($keunggulan as $item)
             <tr>
-                <td>{{ $item->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $keunggulan->firstItem() + $loop->index }}</td>
                 <td>
                     <span class="material-symbols-outlined" style="font-size: 24px; color: #020220;">{{ $item->icon }}</span>
                 </td>

@@ -23,7 +23,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Nama</th>
                 <th>No. Anggota</th>
                 <th>Jabatan</th>
@@ -34,7 +34,7 @@
         <tbody>
             @forelse($members as $member)
             <tr>
-                <td>{{ $member->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $members->firstItem() + $loop->index }}</td>
                 <td>
                     <div style="display: flex; align-items: center; gap: 10px;">
                         @if($member->foto && !str_starts_with($member->foto, 'http'))

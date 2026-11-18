@@ -22,7 +22,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th style="width: 80px;">Tipe</th>
                 <th>Icon</th>
                 <th>Judul</th>
@@ -35,7 +35,7 @@
         <tbody>
             @forelse($visiMisi as $item)
             <tr>
-                <td>{{ $item->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $visiMisi->firstItem() + $loop->index }}</td>
                 <td>
                     <span class="badge {{ $item->type === 'visi' ? 'badge-info' : 'badge-warning' }}">{{ ucfirst($item->type) }}</span>
                 </td>

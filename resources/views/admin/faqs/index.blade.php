@@ -18,7 +18,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Pertanyaan</th>
                 <th style="width: 80px;">Urutan</th>
                 <th>Status</th>
@@ -28,7 +28,7 @@
         <tbody>
             @forelse($faqs as $faq)
             <tr>
-                <td>{{ $faq->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $faqs->firstItem() + $loop->index }}</td>
                 <td><strong>{{ $faq->question }}</strong></td>
                 <td style="text-align: center;">{{ $faq->urutan }}</td>
                 <td>

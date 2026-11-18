@@ -23,7 +23,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Judul</th>
                 <th>Tanggal</th>
                 <th>Kategori</th>
@@ -35,7 +35,7 @@
         <tbody>
             @forelse($blogs as $blog)
             <tr>
-                <td>{{ $blog->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $blogs->firstItem() + $loop->index }}</td>
                 <td><strong>{{ $blog->title }}</strong></td>
                 <td>{{ $blog->date ?? '-' }}</td>
                 <td>{{ $blog->kategori->title ?? '-' }}</td>

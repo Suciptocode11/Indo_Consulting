@@ -18,7 +18,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Nama</th>
                 <th>Sektor</th>
                 <th>URL</th>
@@ -29,7 +29,7 @@
         <tbody>
             @forelse($clients as $client)
             <tr>
-                <td>{{ $client->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $clients->firstItem() + $loop->index }}</td>
                 <td>
                     <div style="display: flex; align-items: center; gap: 10px;">
                         @if($client->img)

@@ -18,7 +18,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Judul</th>
                 <th>Slug</th>
                 <th style="width: 150px;">Aksi</th>
@@ -27,7 +27,7 @@
         <tbody>
             @forelse($kategoris as $kategori)
             <tr>
-                <td>{{ $kategori->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $kategoris->firstItem() + $loop->index }}</td>
                 <td><strong>{{ $kategori->title }}</strong></td>
                 <td>{{ $kategori->slug }}</td>
                 <td>

@@ -11,6 +11,9 @@ class AuthController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
+            if (Auth::user()->isFinance()) {
+                return redirect()->route('admin.keuangan.index');
+            }
             return redirect()->route('admin.dashboard');
         }
 
@@ -26,6 +29,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+            
+            if (Auth::user()->isFinance()) {
+                return redirect()->intended(route('admin.keuangan.index'));
+            }
+
             return redirect()->intended(route('admin.dashboard'));
         }
 

@@ -20,7 +20,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Foto</th>
                 <th>Nama</th>
                 <th>Posisi</th>
@@ -33,7 +33,7 @@
         <tbody>
             @forelse($pendaftarans as $p)
             <tr>
-                <td>{{ $p->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $pendaftarans->firstItem() + $loop->index }}</td>
                 <td>
                     @if($p->foto)
                         <img src="{{ asset('storage/' . $p->foto) }}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;">

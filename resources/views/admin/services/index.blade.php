@@ -23,7 +23,7 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="width: 50px;">ID</th>
+                <th style="width: 50px; text-align: center;">#</th>
                 <th>Judul</th>
                 <th>Icon</th>
                 <th>Status</th>
@@ -33,7 +33,7 @@
         <tbody>
             @forelse($services as $service)
             <tr>
-                <td>{{ $service->id }}</td>
+                <td style="text-align: center; color: #94a3b8; font-weight: 600;">{{ $services->firstItem() + $loop->index }}</td>
                 <td><strong>{{ $service->title }}</strong></td>
                 <td><code style="font-size: 12px; background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">{{ $service->icon }}</code></td>
                 <td>
